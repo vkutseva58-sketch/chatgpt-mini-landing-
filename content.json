@@ -57,5 +57,96 @@
     "accent": "#b9dd68",
     "accentText": "#243016",
     "line": "#d9ddd3"
-  }
+  },
+  "navLinks": [
+    {
+      "label": "О проекте",
+      "url": "#cards-main"
+    },
+    {
+      "label": "Контакты",
+      "url": "#cta-main"
+    }
+  ],
+  "modules": [
+    {
+      "id": "hero-main",
+      "type": "hero",
+      "enabled": true,
+      "tone": "light",
+      "spacing": "large",
+      "layout": "split",
+      "eyebrow": "Пространство для идей",
+      "title": "Проверка",
+      "text": "Лендинг, который можно менять без правки кода: тексты, кнопки, карточки, контакты и цвета управляются из отдельной админки.",
+      "primaryText": "Посмотреть возможности",
+      "primaryUrl": "#features",
+      "secondaryText": "Связаться",
+      "secondaryUrl": "#contact",
+      "badge": "Редактируется из админки",
+      "image": ""
+    },
+    {
+      "id": "stats-main",
+      "type": "stats",
+      "enabled": true,
+      "tone": "light",
+      "spacing": "compact",
+      "items": [
+        {
+          "value": "01",
+          "label": "одна страница"
+        },
+        {
+          "value": "100%",
+          "label": "ручное управление"
+        },
+        {
+          "value": "∞",
+          "label": "вариантов текста"
+        }
+      ]
+    },
+    {
+      "id": "cards-main",
+      "type": "cards",
+      "enabled": true,
+      "tone": "light",
+      "spacing": "normal",
+      "columns": 3,
+      "eyebrow": "Без захода в код",
+      "title": "Что можно менять",
+      "items": [
+        {
+          "kicker": "01",
+          "title": "Тексты",
+          "text": "Заголовки, описания, кнопки и подписи — всё редактируется вручную."
+        },
+        {
+          "kicker": "02",
+          "title": "Визуал",
+          "text": "Основные цвета, акцент и изображение первого экрана можно заменить из панели."
+        },
+        {
+          "kicker": "03",
+          "title": "Контакты",
+          "text": "Меняй финальный призыв к действию и ссылку, куда должен перейти посетитель."
+        }
+      ]
+    },
+    {
+      "id": "cta-main",
+      "type": "cta",
+      "enabled": true,
+      "tone": "dark",
+      "spacing": "normal",
+      "align": "left",
+      "eyebrow": "Готово к следующему шагу",
+      "title": "Сайт меняется вместе с твоей идеей.",
+      "text": "Открой админку, поправь контент, посмотри предпросмотр и опубликуй обновление.",
+      "buttonText": "Открыть админку",
+      "buttonUrl": "/admin.html"
+    }
+  ],
+  "builderVersion": 2
 }
