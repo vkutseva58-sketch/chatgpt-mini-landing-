@@ -16,10 +16,21 @@ button,a.button{border:1px solid var(--line);background:var(--panel2);color:var(
 .card-editor{border:1px solid var(--line);border-radius:15px;padding:12px;margin-bottom:10px;background:#131611}.card-editor strong{font-size:12px;color:var(--muted);display:block;margin-bottom:10px}
 .publish{margin-top:20px;border-top:1px solid var(--line);padding-top:18px}.notice{font-size:12px;color:var(--muted);line-height:1.55;margin:0 0 12px}.token{display:flex;gap:8px}.token input{flex:1;min-width:0}.status{margin-top:12px;padding:11px 12px;border-radius:12px;background:#11140f;color:var(--muted);font-size:12px;line-height:1.45}.status.ok{color:#cfeaa0}.status.err{color:#ffb3b3}
 .p-site{--pbg:#f4f1ea;--psurface:#fffdf8;--ptext:#20251f;--pmuted:#6f746b;--paccent:#b9dd68;--paccentText:#243016;--pline:#d9ddd3;background:var(--pbg);color:var(--ptext);border-radius:18px;padding:22px;min-height:710px;overflow:hidden}.p-nav{display:flex;justify-content:space-between;border-bottom:1px solid var(--pline);padding-bottom:16px;font-weight:850}.p-hero{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;padding:38px 0}.p-eyebrow{font-size:9px;text-transform:uppercase;letter-spacing:.14em;font-weight:800}.p-title{font-size:clamp(38px,5vw,72px);line-height:.94;letter-spacing:-.06em;margin:13px 0}.p-sub{color:var(--pmuted);line-height:1.55;font-size:12px;max-width:520px}.p-buttons{display:flex;gap:8px;margin-top:16px}.p-btn{padding:9px 12px;border-radius:999px;background:var(--ptext);color:var(--psurface);font-size:10px;font-weight:750}.p-btn.alt{background:var(--psurface);color:var(--ptext);border:1px solid var(--pline)}.p-visual{min-height:240px;border-radius:18px;background:radial-gradient(circle at 70% 25%,color-mix(in srgb,var(--paccent) 75%,white),transparent 30%),var(--psurface);border:1px solid var(--pline);position:relative;overflow:hidden}.p-visual img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}.p-cards{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;border-top:1px solid var(--pline);padding-top:20px}.p-card{background:var(--psurface);border:1px solid var(--pline);border-radius:14px;padding:14px;min-height:150px}.p-card:first-child{background:var(--paccent);color:var(--paccentText);border-color:transparent}.p-card h3{font-size:18px;margin:25px 0 7px}.p-card p{font-size:10px;line-height:1.45;color:var(--pmuted)}.p-card:first-child p{color:color-mix(in srgb,var(--paccentText) 70%,transparent)}.p-contact{margin-top:18px;background:var(--ptext);color:var(--psurface);border-radius:17px;padding:20px}.p-contact h3{font-size:26px;letter-spacing:-.05em;margin:8px 0}.p-contact p{font-size:10px;color:color-mix(in srgb,var(--psurface) 70%,transparent)}
+.login-gate{position:fixed;inset:0;z-index:999;display:grid;place-items:center;padding:20px;background:rgba(9,11,8,.76);backdrop-filter:blur(18px)}.login-gate.hidden{display:none}.login-card{width:min(390px,100%);border:1px solid var(--line);background:#171a15;border-radius:24px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.34)}.login-card .lock{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:var(--accent);color:#202913;font-size:22px;margin-bottom:18px}.login-card h1{font-size:32px;letter-spacing:-.05em;margin:0 0 8px}.login-card p{color:var(--muted);font-size:13px;line-height:1.5;margin:0 0 18px}.login-card input{width:100%;min-height:48px;border:1px solid var(--line);background:#10130e;color:var(--text);border-radius:13px;padding:0 13px;font:inherit;font-size:16px;outline:none}.login-card input:focus{border-color:var(--accent)}.login-actions{display:flex;gap:8px;margin-top:10px}.login-actions button{flex:1}.login-error{min-height:18px;margin-top:10px;font-size:12px;color:var(--danger)}.admin-locked .shell{filter:blur(4px);pointer-events:none;user-select:none}
 @media(max-width:960px){.layout{grid-template-columns:1fr}.preview{position:static}.preview-frame{min-height:0}.p-site{min-height:0}.p-hero{grid-template-columns:1fr}.p-cards{grid-template-columns:1fr}.row,.color-row{grid-template-columns:1fr}}@media(max-width:520px){.shell{width:min(100% - 16px,1420px)}header{align-items:flex-start;flex-direction:column}.top-actions{width:100%}.top-actions>*{flex:1}.editor{padding:14px}.preview-frame{padding:10px}.token{flex-direction:column}}
 </style>
 </head>
-<body>
+<body class="admin-locked">
+<div class="login-gate" id="loginGate">
+  <form class="login-card" id="loginForm">
+    <div class="lock">⌁</div>
+    <h1>Вход в админку</h1>
+    <p>Тестовый пароль пока <b>000</b>. Позже его можно вынести в защищённую переменную Vercel.</p>
+    <input id="adminPassword" type="password" inputmode="numeric" autocomplete="current-password" placeholder="Пароль" aria-label="Пароль">
+    <div class="login-actions"><button class="primary" type="submit">Войти</button></div>
+    <div class="login-error" id="loginError"></div>
+  </form>
+</div>
 <div class="shell">
 <header><div class="brand">Админка<small>редактор лендинга</small></div><div class="top-actions"><a class="button ghost" href="/" target="_blank">Открыть сайт ↗</a><button id="saveDraft">Сохранить черновик</button><button id="resetPublished">Сбросить</button></div></header>
 <div class="layout">
@@ -63,10 +74,10 @@ button,a.button{border:1px solid var(--line);background:var(--panel2);color:var(
   </div>
 
   <div class="publish">
-    <div class="section-title">Публикация в GitHub</div>
-    <p class="notice">Черновик сохраняется только на этом устройстве. Чтобы изменения увидели все, нужен GitHub fine-grained token с доступом на запись к этому репозиторию. Токен не записывается в localStorage и не отправляется никуда, кроме GitHub API.</p>
-    <div class="token"><input id="token" type="password" autocomplete="off" placeholder="github_pat_…"><button class="primary" id="publish">Опубликовать</button></div>
-    <div class="status" id="status">Готово к редактированию.</div>
+    <div class="section-title">Публикация</div>
+    <p class="notice">Токен больше не вводится на сайте. Админка отправляет изменения на серверную функцию Vercel, а уже она обновляет <b>content.json</b> в GitHub.</p>
+    <button class="primary" id="publish">Опубликовать изменения</button>
+    <div class="status" id="status">Проверяю сервер публикации…</div>
   </div>
 </section>
 
@@ -77,7 +88,7 @@ button,a.button{border:1px solid var(--line);background:var(--panel2);color:var(
 </div>
 </div>
 <script>
-const repo="vkutseva58-sketch/chatgpt-mini-landing-",branch="main",path="content.json";
+const TEST_PASSWORD="000"; let currentPassword="";
 const fallback={"brand":"начало","navLabel":"О проекте","eyebrow":"Пространство для идей","title":"Большие идеи начинаются с первого шага.","subtitle":"Лендинг, который можно менять без правки кода: тексты, кнопки, карточки, контакты и цвета управляются из отдельной админки.","primaryButtonText":"Посмотреть возможности","primaryButtonUrl":"#features","secondaryButtonText":"Связаться","secondaryButtonUrl":"#contact","heroBadge":"Редактируется из админки","heroImage":"","stats":[{"value":"01","label":"одна страница"},{"value":"100%","label":"ручное управление"},{"value":"∞","label":"вариантов текста"}],"featuresTitle":"Что можно менять","featuresSubtitle":"Без захода в код","features":[{"number":"01","title":"Тексты","text":"Заголовки, описания, кнопки и подписи — всё редактируется вручную."},{"number":"02","title":"Визуал","text":"Основные цвета, акцент и изображение первого экрана можно заменить из панели."},{"number":"03","title":"Контакты","text":"Меняй финальный призыв к действию и ссылку, куда должен перейти посетитель."}],"contactEyebrow":"Готово к следующему шагу","contactTitle":"Сайт меняется вместе с твоей идеей.","contactText":"Открой админку, поправь контент, посмотри предпросмотр и опубликуй обновление.","contactButtonText":"Открыть админку","contactButtonUrl":"/admin.html","footerText":"© 2026 Начало","colors":{"background":"#f4f1ea","surface":"#fffdf8","text":"#20251f","muted":"#6f746b","accent":"#b9dd68","accentText":"#243016","line":"#d9ddd3"}};
 let published=structuredClone(fallback),state=structuredClone(fallback);
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -126,21 +137,65 @@ async function load(){
 $$(".tab").forEach(btn=>btn.addEventListener("click",()=>{$$(".tab").forEach(x=>x.classList.remove("active"));$$(".panel").forEach(x=>x.classList.remove("active"));btn.classList.add("active");$('[data-panel="'+btn.dataset.tab+'"]').classList.add("active")}));
 $("#saveDraft").addEventListener("click",()=>{localStorage.setItem("landing-admin-draft",JSON.stringify(state));draftState.textContent="черновик сохранён на устройстве";setStatus("Черновик сохранён локально.","ok")});
 $("#resetPublished").addEventListener("click",()=>{localStorage.removeItem("landing-admin-draft");state=structuredClone(published);hydrateForm();draftState.textContent="опубликованная версия";setStatus("Возвращена опубликованная версия.")});
-function toBase64Utf8(str){const bytes=new TextEncoder().encode(str);let bin="";const chunk=0x8000;for(let i=0;i<bytes.length;i+=chunk)bin+=String.fromCharCode(...bytes.subarray(i,i+chunk));return btoa(bin)}
-$("#publish").addEventListener("click",async()=>{
-  const token=$("#token").value.trim();if(!token){setStatus("Вставь GitHub token в поле выше. В чат его отправлять не нужно.","err");return}
-  const btn=$("#publish");btn.disabled=true;setStatus("Публикую в GitHub…");
+async function checkPublisher(){
   try{
-    const api="https://api.github.com/repos/"+repo+"/contents/"+path;
-    const headers={Accept:"application/vnd.github+json",Authorization:"Bearer "+token,"X-GitHub-Api-Version":"2022-11-28"};
-    const get=await fetch(api+"?ref="+encodeURIComponent(branch),{headers});if(!get.ok)throw new Error("GitHub GET: "+get.status);
-    const current=await get.json();
-    const body={message:"Update landing content from admin",content:toBase64Utf8(JSON.stringify(state,null,2)+"\n"),sha:current.sha,branch};
-    const put=await fetch(api,{method:"PUT",headers:{...headers,"Content-Type":"application/json"},body:JSON.stringify(body)});
-    const result=await put.json();if(!put.ok)throw new Error(result.message||("GitHub PUT: "+put.status));
-    published=structuredClone(state);localStorage.removeItem("landing-admin-draft");draftState.textContent="опубликовано";setStatus("Готово. Commit "+result.commit.sha.slice(0,7)+". Vercel должен автоматически обновить сайт.","ok");
-  }catch(e){setStatus("Не получилось опубликовать: "+e.message,"err")}finally{btn.disabled=false}
+    const r=await fetch("/api/publish",{cache:"no-store"});
+    const info=await r.json();
+    if(info.configured){
+      setStatus("Сервер публикации готов. Можно менять контент и нажимать «Опубликовать».","ok");
+    }else{
+      setStatus("Админка готова, но на Vercel нужно один раз добавить секрет GITHUB_TOKEN.","err");
+    }
+  }catch(e){
+    setStatus("Сервер публикации пока недоступен: "+e.message,"err");
+  }
+}
+
+$("#publish").addEventListener("click",async()=>{
+  if(!currentPassword){setStatus("Сначала войди в админку.","err");return}
+  const btn=$("#publish");btn.disabled=true;setStatus("Публикую изменения…");
+  try{
+    const r=await fetch("/api/publish",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({password:currentPassword,content:state})
+    });
+    const result=await r.json();
+    if(!r.ok)throw new Error(result.error||("Ошибка "+r.status));
+    published=structuredClone(state);
+    localStorage.removeItem("landing-admin-draft");
+    draftState.textContent="опубликовано";
+    setStatus("Готово. Commit "+(result.commit?result.commit.slice(0,7):"создан")+". Vercel автоматически обновит лендинг.","ok");
+  }catch(e){
+    setStatus("Не получилось опубликовать: "+e.message,"err");
+  }finally{btn.disabled=false}
 });
+
+const loginGate=$("#loginGate"),loginForm=$("#loginForm"),adminPassword=$("#adminPassword"),loginError=$("#loginError");
+loginForm.addEventListener("submit",e=>{
+  e.preventDefault();
+  const value=adminPassword.value.trim();
+  if(value!==TEST_PASSWORD){
+    loginError.textContent="Неверный пароль";
+    adminPassword.select();
+    return;
+  }
+  currentPassword=value;
+  loginError.textContent="";
+  loginGate.classList.add("hidden");
+  document.body.classList.remove("admin-locked");
+  sessionStorage.setItem("landing-admin-unlocked","1");
+  checkPublisher();
+});
+if(sessionStorage.getItem("landing-admin-unlocked")==="1"){
+  currentPassword=TEST_PASSWORD;
+  loginGate.classList.add("hidden");
+  document.body.classList.remove("admin-locked");
+  checkPublisher();
+}else{
+  setTimeout(()=>adminPassword.focus(),80);
+}
+
 load();
 </script>
 </body>
