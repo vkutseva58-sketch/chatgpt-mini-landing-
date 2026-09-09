@@ -39,7 +39,14 @@ canvas{display:block;width:100%;height:clamp(520px,72vh,760px);touch-action:mani
 .score-card{display:flex;gap:18px;align-items:center}
 .stat b{display:block;font-size:20px;line-height:1;font-variant-numeric:tabular-nums}
 .stat span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.tip-card{font-size:12px;color:var(--muted);max-width:240px;line-height:1.35;text-align:right}
+.tip-card{font-size:12px;color:var(--muted);max-width:260px;line-height:1.35;text-align:right}
+.game-controls{position:absolute;right:18px;bottom:18px;z-index:4;display:flex;align-items:end;gap:12px}
+.shoot-btn{width:82px;height:82px;border:1px solid rgba(255,255,255,.88);border-radius:27px;background:linear-gradient(145deg,rgba(119,124,239,.96),rgba(171,111,226,.96));color:white;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;box-shadow:0 18px 34px rgba(77,70,164,.28),inset 0 1px 0 rgba(255,255,255,.36);backdrop-filter:blur(12px);touch-action:manipulation;user-select:none;transition:transform .12s ease,filter .12s ease}
+.shoot-btn .blast{font-size:27px;line-height:1;text-shadow:0 0 16px rgba(255,247,180,.75)}
+.shoot-btn small{font-size:9px;letter-spacing:.16em;font-weight:900}
+.shoot-btn:active,.shoot-btn.firing{transform:scale(.92) rotate(-2deg);filter:brightness(1.12)}
+.shoot-btn.firing .blast{animation:shotPulse .18s ease-out}
+@keyframes shotPulse{0%{transform:scale(.72) rotate(-20deg)}60%{transform:scale(1.35) rotate(8deg)}100%{transform:scale(1)}}
 .overlay{position:absolute;inset:0;display:grid;place-items:center;padding:24px;background:linear-gradient(180deg,rgba(244,245,255,.16),rgba(32,34,62,.13));transition:opacity .25s ease}
 .overlay.hidden{opacity:0;pointer-events:none}
 .modal{width:min(520px,100%);background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.9);backdrop-filter:blur(18px);border-radius:28px;padding:28px;box-shadow:0 24px 70px rgba(53,59,101,.2);text-align:center}
@@ -64,6 +71,8 @@ canvas{display:block;width:100%;height:clamp(520px,72vh,760px);touch-action:mani
   canvas{height:calc(100svh - 112px);min-height:560px;max-height:760px}
   .hud{top:12px;left:12px;right:12px}
   .tip-card{display:none}
+  .game-controls{right:12px;bottom:14px}
+  .shoot-btn{width:76px;height:76px;border-radius:24px}
   .score-card{gap:14px;padding:10px 12px}
   .stat b{font-size:18px}
   .modal{padding:24px 20px;border-radius:24px}
@@ -96,16 +105,23 @@ canvas{display:block;width:100%;height:clamp(520px,72vh,760px);touch-action:mani
         <div class="stat"><b id="stars">0</b><span>звёзды</span></div>
         <div class="stat"><b id="best">0</b><span>рекорд</span></div>
       </div>
-      <div class="tip-card">Тапни по игре или нажми <b>Пробел</b>, чтобы прыгнуть. Скорость растёт постепенно.</div>
+      <div class="tip-card">Тап / <b>Пробел</b> — прыжок. Кнопка <b>ОГОНЬ</b> или клавиша <b>F</b> — выстрел.</div>
+    </div>
+
+    <div class="game-controls" aria-label="Управление">
+      <button class="shoot-btn" id="shootBtn" type="button" aria-label="Стрелять">
+        <span class="blast" aria-hidden="true">✦</span>
+        <small>ОГОНЬ</small>
+      </button>
     </div>
 
     <div class="overlay" id="overlay">
       <div class="modal">
         <span class="kicker"><i></i> первая версия</span>
         <h1>Lumi<br><em>Run.</em></h1>
-        <p>Проведи маленького Луми через светящийся лес. Перепрыгивай кристаллы, собирай звёзды и попробуй побить свой рекорд.</p>
+        <p>Проведи маленького Луми через светящийся лес. Перепрыгивай препятствия, собирай звёзды и расчищай путь световыми выстрелами.</p>
         <button class="start-btn" id="startBtn" type="button">Начать забег ✦</button>
-        <div class="controls-note">Телефон: тап • Компьютер: Space / ↑</div>
+        <div class="controls-note">Прыжок: тап / Space / ↑ • Выстрел: ОГОНЬ / F</div>
       </div>
     </div>
   </div>
@@ -127,6 +143,7 @@ canvas{display:block;width:100%;height:clamp(520px,72vh,760px);touch-action:mani
   const startBtn = document.getElementById("startBtn");
   const pauseBtn = document.getElementById("pauseBtn");
   const soundBtn = document.getElementById("soundBtn");
+  const shootBtn = document.getElementById("shootBtn");
   const soundIcon = document.getElementById("soundIcon");
   const scoreEl = document.getElementById("score");
   const starsEl = document.getElementById("stars");
@@ -140,6 +157,7 @@ canvas{display:block;width:100%;height:clamp(520px,72vh,760px);touch-action:mani
   let speed = 390;
   let spawnTimer = 0, starTimer = 0;
   let shake = 0;
+  let shotCooldown = 0;
   let soundOn = true;
   let audioCtx = null;
 
@@ -151,9 +169,10 @@ canvas{display:block;width:100%;height:clamp(520px,72vh,760px);touch-action:mani
 
   const state = {
     groundY: 0,
-    player: {x:0,y:0,vy:0,w:56,h:64,onGround:true,run:0,squash:0},
+    player: {x:0,y:0,vy:0,w:56,h:64,onGround:true,run:0,squash:0,shoot:0},
     obstacles: [],
     pickups: [],
+    projectiles: [],
     particles: [],
     clouds: Array.from({length:7}, (_,i)=>({x:i*220+rand(0,120),y:rand(55,220),s:rand(.6,1.3),v:rand(6,16)})),
     motes: Array.from({length:42},()=>({x:Math.random(),y:Math.random(),r:rand(.5,1.8),a:rand(.2,.8),p:rand(0,Math.PI*2)}))
@@ -188,8 +207,9 @@ canvas{display:block;width:100%;height:clamp(520px,72vh,760px);touch-action:mani
 
   function reset(){
     score = 0; collected = 0; speed = 390; spawnTimer = .9; starTimer = 1.7;
-    state.obstacles.length = 0; state.pickups.length = 0; state.particles.length = 0;
-    Object.assign(state.player,{y:state.groundY-state.player.h,vy:0,onGround:true,run:0,squash:0});
+    state.obstacles.length = 0; state.pickups.length = 0; state.projectiles.length = 0; state.particles.length = 0;
+    shotCooldown = 0;
+    Object.assign(state.player,{y:state.groundY-state.player.h,vy:0,onGround:true,run:0,squash:0,shoot:0});
     scoreEl.textContent = "0"; starsEl.textContent = "0";
     shake = 0; gameOver = false; paused = false;
     pauseBtn.querySelector("span").textContent = "Ⅱ";
@@ -228,6 +248,34 @@ canvas{display:block;width:100%;height:clamp(520px,72vh,760px);touch-action:mani
       puff(p.x+20,state.groundY-3,8,"#d9d8ff");
       beep(520,.07,"triangle",.028);
     }
+  }
+
+  function shoot(){
+    if(!running || paused || shotCooldown > 0) return;
+    const p = state.player;
+    shotCooldown = .24;
+    p.shoot = 1;
+
+    const x = p.x + p.w - 2;
+    const y = p.y + p.h * .43;
+    state.projectiles.push({x,y,vx:980,life:1.15,t:0,r:6});
+
+    for(let i=0;i<7;i++){
+      state.particles.push({
+        x:x+3,y,
+        vx:rand(80,220),vy:rand(-90,90),
+        life:rand(.12,.28),t:0,r:rand(1.5,4),
+        color:i%2?"#fff4a8":"#d8c7ff"
+      });
+    }
+
+    shootBtn.classList.remove("firing");
+    void shootBtn.offsetWidth;
+    shootBtn.classList.add("firing");
+    setTimeout(()=>shootBtn.classList.remove("firing"),180);
+
+    beep(1040,.055,"square",.022);
+    setTimeout(()=>beep(760,.045,"triangle",.016),25);
   }
 
   function puff(x,y,n,color){
@@ -283,6 +331,8 @@ canvas{display:block;width:100%;height:clamp(520px,72vh,760px);touch-action:mani
       p.y = state.groundY - p.h; p.vy = 0; p.onGround = true;
     }
     p.squash = Math.max(0,p.squash-dt*4);
+    p.shoot = Math.max(0,p.shoot-dt*5.5);
+    shotCooldown = Math.max(0,shotCooldown-dt);
 
     spawnTimer -= dt;
     if(spawnTimer <= 0){
@@ -298,9 +348,32 @@ canvas{display:block;width:100%;height:clamp(520px,72vh,760px);touch-action:mani
 
     for(const o of state.obstacles) o.x -= speed*dt;
     for(const s of state.pickups){ s.x -= speed*dt; s.spin += dt*5; }
+    for(const b of state.projectiles){ b.x += b.vx*dt; b.t += dt; }
 
     state.obstacles = state.obstacles.filter(o=>o.x+o.w>-60);
     state.pickups = state.pickups.filter(s=>s.x+s.r>-40);
+    state.projectiles = state.projectiles.filter(b=>b.x<W+70 && b.t<b.life);
+
+    for(let bi=state.projectiles.length-1;bi>=0;bi--){
+      const b=state.projectiles[bi];
+      const bulletBox={x:b.x-7,y:b.y-4,w:17,h:8};
+      let destroyed=false;
+      for(let oi=state.obstacles.length-1;oi>=0;oi--){
+        const o=state.obstacles[oi];
+        if(intersects(bulletBox,o,1)){
+          sparkle(o.x+o.w*.5,o.y+o.h*.45,16);
+          puff(o.x+o.w*.45,o.y+o.h*.55,7,o.type==="crystal"?"#b7a8ff":"#d8b6a0");
+          state.obstacles.splice(oi,1);
+          state.projectiles.splice(bi,1);
+          score += 18;
+          shake = Math.max(shake,2.2);
+          beep(360,.06,"triangle",.022);
+          destroyed=true;
+          break;
+        }
+      }
+      if(destroyed) continue;
+    }
 
     const hitbox = {x:p.x+8,y:p.y+8,w:p.w-16,h:p.h-10};
     for(const o of state.obstacles){
@@ -523,6 +596,32 @@ canvas{display:block;width:100%;height:clamp(520px,72vh,760px);touch-action:mani
     ctx.restore();
   }
 
+  function drawProjectile(b){
+    ctx.save();
+    const glow=ctx.createLinearGradient(b.x-34,b.y,b.x+18,b.y);
+    glow.addColorStop(0,"rgba(188,168,255,0)");
+    glow.addColorStop(.5,"rgba(188,168,255,.45)");
+    glow.addColorStop(1,"rgba(255,247,174,.96)");
+    ctx.strokeStyle=glow;
+    ctx.lineWidth=5;
+    ctx.lineCap="round";
+    ctx.beginPath();
+    ctx.moveTo(b.x-30,b.y);
+    ctx.lineTo(b.x+8,b.y);
+    ctx.stroke();
+
+    const rg=ctx.createRadialGradient(b.x+8,b.y,0,b.x+8,b.y,18);
+    rg.addColorStop(0,"rgba(255,250,190,.95)");
+    rg.addColorStop(.4,"rgba(215,194,255,.55)");
+    rg.addColorStop(1,"rgba(215,194,255,0)");
+    ctx.fillStyle=rg;
+    ctx.beginPath();ctx.arc(b.x+8,b.y,18,0,Math.PI*2);ctx.fill();
+
+    ctx.fillStyle="#fff8b4";
+    ctx.beginPath();ctx.arc(b.x+8,b.y,4.5,0,Math.PI*2);ctx.fill();
+    ctx.restore();
+  }
+
   function drawPlayer(){
     const p=state.player;
     const airborne=!p.onGround;
@@ -574,6 +673,36 @@ canvas{display:block;width:100%;height:clamp(520px,72vh,760px);touch-action:mani
     ctx.fillStyle="#a884e7";
     ctx.beginPath();ctx.moveTo(-19,4);ctx.quadraticCurveTo(-35,1,-33,16);ctx.quadraticCurveTo(-21,13,-14,11);ctx.closePath();ctx.fill();
 
+    const recoil=p.shoot*5;
+    ctx.save();
+    ctx.translate(17-recoil,5);
+    ctx.rotate(-.08+p.shoot*.05);
+    ctx.strokeStyle="#dad6f6";
+    ctx.lineWidth=7;
+    ctx.lineCap="round";
+    ctx.beginPath();ctx.moveTo(-7,2);ctx.lineTo(5,1);ctx.stroke();
+
+    const gunGrad=ctx.createLinearGradient(0,-6,28,8);
+    gunGrad.addColorStop(0,"#7c74df");
+    gunGrad.addColorStop(1,"#b277df");
+    ctx.fillStyle=gunGrad;
+    roundedRect(0,-6,27,12,6);ctx.fill();
+    ctx.fillStyle="#efeaff";
+    roundedRect(19,-3,13,6,3);ctx.fill();
+    ctx.fillStyle="#5d568f";
+    roundedRect(8,4,7,11,3);ctx.fill();
+
+    if(p.shoot>.45){
+      const flash=8+p.shoot*7;
+      ctx.fillStyle="rgba(255,247,164,.96)";
+      starPath(37,0,flash,worldTime*10);ctx.fill();
+      const rg=ctx.createRadialGradient(37,0,0,37,0,25);
+      rg.addColorStop(0,"rgba(255,243,145,.55)");
+      rg.addColorStop(1,"rgba(255,243,145,0)");
+      ctx.fillStyle=rg;ctx.beginPath();ctx.arc(37,0,25,0,Math.PI*2);ctx.fill();
+    }
+    ctx.restore();
+
     ctx.restore();
   }
 
@@ -601,6 +730,7 @@ canvas{display:block;width:100%;height:clamp(520px,72vh,760px);touch-action:mani
     drawGround();
     for(const s of state.pickups) drawPickup(s);
     for(const o of state.obstacles) o.type==="crystal"?drawCrystal(o):drawStump(o);
+    for(const b of state.projectiles) drawProjectile(b);
     drawPlayer();
     drawParticles();
     ctx.restore();
@@ -628,17 +758,19 @@ canvas{display:block;width:100%;height:clamp(520px,72vh,760px);touch-action:mani
     if(!running) return;
     paused=!paused;
     pauseBtn.querySelector("span").textContent=paused?"▶":"Ⅱ";
-    if(!paused){last=performance.now();requestAnimationFrame(loop)}
+    if(!paused){last=performance.now();}
   }
 
   startBtn.addEventListener("click", start);
   canvas.addEventListener("pointerdown", e=>{e.preventDefault(); jump();});
+  shootBtn.addEventListener("pointerdown", e=>{e.preventDefault();e.stopPropagation();shoot();});
   wrap.addEventListener("pointerdown", e=>{
     if(e.target.closest("button") || !running) return;
     if(e.target!==canvas) jump();
   });
   window.addEventListener("keydown",e=>{
     if(e.code==="Space"||e.code==="ArrowUp"){e.preventDefault();jump()}
+    if(e.code==="KeyF"||e.code==="KeyX"){e.preventDefault();shoot()}
     if(e.code==="KeyP"){togglePause()}
   });
   pauseBtn.addEventListener("click",togglePause);
