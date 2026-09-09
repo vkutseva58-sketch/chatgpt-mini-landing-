@@ -3,32 +3,102 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f5f3eb">
+<meta name="theme-color" content="#eef3ff">
 <meta name="description" content="Личное пространство для идей, экспериментов и новых проектов.">
 <title>Начало — пространство для идей</title>
 <style>
-:root{--paper:#f5f3eb;--ink:#222820;--muted:#62695d;--green:#d4ec80;--line:#d9dcd0}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}a{color:inherit}a:focus-visible{outline:3px solid #647f26;outline-offset:6px}.wrap{max-width:1200px;margin:auto;padding:0 32px}header{display:flex;justify-content:space-between;align-items:center;padding:29px 0;border-bottom:1px solid var(--line)}.brand{text-decoration:none;font-weight:800;font-size:25px;letter-spacing:-1px}.brand span{color:#74952f}nav a{font-size:14px;text-decoration:none}nav a:hover{text-decoration:underline}.hero{padding:90px 0 78px;position:relative}.eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:10px}.dot{width:8px;height:8px;background:#739337;border-radius:50%}h1{font-size:clamp(52px,8.7vw,112px);line-height:1;letter-spacing:-.065em;max-width:990px;font-weight:500;margin:31px 0}h1 em{font-family:Georgia,serif;font-weight:400;letter-spacing:-.07em}.bottom{display:flex;justify-content:space-between;align-items:end;gap:32px}.intro{font-size:19px;line-height:1.6;color:var(--muted);max-width:470px;margin:0}.button{display:inline-flex;align-items:center;gap:30px;padding:20px 25px;background:var(--ink);color:white;border-radius:40px;text-decoration:none;white-space:nowrap;font-size:15px;transition:background .2s,transform .2s}.button:hover{background:#435238;transform:translateY(-2px)}.section{padding:0 0 70px;scroll-margin-top:28px}.section-head{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:22px 0 26px;align-items:center}.section-head h2{margin:0;font-size:14px;font-weight:400}.section-head span{font-size:12px;color:var(--muted)}.grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:16px}.card{min-height:285px;padding:28px;border:1px solid var(--line);border-radius:20px;display:flex;flex-direction:column;justify-content:space-between}.card:first-child{background:var(--green);border-color:var(--green)}.card:nth-child(2){background:#ece9e0}.number{font-size:12px;letter-spacing:1px}.card h3{font-size:30px;letter-spacing:-1px;font-weight:500;margin:38px 0 12px}.card p{font-size:15px;line-height:1.55;max-width:270px;color:#4b5343;margin:0}.note{border-top:1px solid var(--line);padding:34px 0 60px;display:flex;justify-content:space-between;gap:30px}.note h2{font-size:32px;letter-spacing:-1px;font-weight:500;margin:0}.note p{max-width:430px;font-size:16px;line-height:1.6;color:var(--muted);margin:0}footer{display:flex;justify-content:space-between;gap:20px;padding:24px 0;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}footer a{text-decoration:none}@media(max-width:700px){.wrap{padding:0 22px}header{padding:23px 0}.hero{padding:62px 0 46px}h1{font-size:clamp(48px,12vw,80px);margin:27px 0}.bottom{align-items:start;flex-direction:column;gap:25px}.intro{font-size:17px}.grid{grid-template-columns:1fr}.card{min-height:230px}.card h3{margin-top:26px}.section{padding-bottom:40px}.note{flex-direction:column;padding-bottom:40px}.note h2{font-size:28px}.section-head span{font-size:11px}footer{font-size:11px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}}
+:root{--paper:#eef3ff;--ink:#171c2a;--muted:#65708a;--accent:#7c8cff;--accent2:#b8c1ff;--line:#cfd7eb}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#f7f9ff 0%,var(--paper) 100%);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+a{color:inherit}
+a:focus-visible{outline:3px solid var(--accent);outline-offset:6px}
+.wrap{max-width:1200px;margin:auto;padding:0 32px}
+header{display:flex;justify-content:space-between;align-items:center;padding:29px 0;border-bottom:1px solid var(--line)}
+.brand{text-decoration:none;font-weight:800;font-size:25px;letter-spacing:-1px}
+.brand span{color:var(--accent)}
+nav a{font-size:14px;text-decoration:none}
+nav a:hover{text-decoration:underline}
+.hero{padding:90px 0 78px;position:relative}
+.hero:before{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,var(--accent2),transparent 70%);filter:blur(12px);opacity:.38;right:2%;top:40px;z-index:-1}
+.eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:10px}
+.dot{width:8px;height:8px;background:var(--accent);border-radius:50%}
+h1{font-size:clamp(52px,8.7vw,112px);line-height:1;letter-spacing:-.065em;max-width:990px;font-weight:500;margin:31px 0}
+h1 em{font-family:Georgia,serif;font-weight:400;letter-spacing:-.07em;color:#5866d9}
+.bottom{display:flex;justify-content:space-between;align-items:end;gap:32px}
+.intro{font-size:19px;line-height:1.6;color:var(--muted);max-width:470px;margin:0}
+.button{display:inline-flex;align-items:center;gap:30px;padding:20px 25px;background:var(--ink);color:white;border-radius:40px;text-decoration:none;white-space:nowrap;font-size:15px;transition:background .2s,transform .2s}
+.button:hover{background:#343e67;transform:translateY(-2px)}
+.section{padding:0 0 70px;scroll-margin-top:28px}
+.section-head{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:22px 0 26px;align-items:center}
+.section-head h2{margin:0;font-size:14px;font-weight:400}
+.section-head span{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:16px}
+.card{min-height:285px;padding:28px;border:1px solid var(--line);border-radius:20px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 16px 40px rgba(72,86,136,.08)}
+.card:first-child{background:#cfd6ff;border-color:#cfd6ff}
+.card:nth-child(2){background:#f4f6ff}
+.card:nth-child(3){background:#ffffff}
+.number{font-size:12px;letter-spacing:1px}
+.card h3{font-size:30px;letter-spacing:-1px;font-weight:500;margin:38px 0 12px}
+.card p{font-size:15px;line-height:1.55;max-width:270px;color:#535d76;margin:0}
+.status{margin-top:22px;display:inline-flex;align-items:center;gap:9px;padding:10px 14px;border-radius:999px;background:#ffffffb8;border:1px solid var(--line);font-size:13px;color:#4d5871}
+.status b{display:inline-block;width:8px;height:8px;border-radius:50%;background:#38b56d}
+.note{border-top:1px solid var(--line);padding:34px 0 60px;display:flex;justify-content:space-between;gap:30px}
+.note h2{font-size:32px;letter-spacing:-1px;font-weight:500;margin:0}
+.note p{max-width:430px;font-size:16px;line-height:1.6;color:var(--muted);margin:0}
+footer{display:flex;justify-content:space-between;gap:20px;padding:24px 0;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+footer a{text-decoration:none}
+@media(max-width:700px){
+.wrap{padding:0 22px}
+header{padding:23px 0}
+.hero{padding:62px 0 46px}
+h1{font-size:clamp(48px,12vw,80px);margin:27px 0}
+.bottom{align-items:start;flex-direction:column;gap:25px}
+.intro{font-size:17px}
+.grid{grid-template-columns:1fr}
+.card{min-height:230px}
+.card h3{margin-top:26px}
+.section{padding-bottom:40px}
+.note{flex-direction:column;padding-bottom:40px}
+.note h2{font-size:28px}
+.section-head span{font-size:11px}
+footer{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}}
 </style>
 </head>
 <body id="top">
 <div class="wrap">
-<header><a class="brand" href="#top" aria-label="Начало — на главную">начало<span>↗</span></a><nav aria-label="Основная навигация"><a href="#about">О пространстве ↗</a></nav></header>
+<header>
+<a class="brand" href="#top" aria-label="Начало — на главную">начало<span>↗</span></a>
+<nav aria-label="Основная навигация"><a href="#about">О пространстве ↗</a></nav>
+</header>
 <main>
 <section class="hero" aria-labelledby="hero-title">
 <div class="eyebrow"><span class="dot" aria-hidden="true"></span>Место для следующего шага</div>
-<h1 id="hero-title">Всё работает.<br>Двигаемся <em>дальше.</em></h1>
-<div class="bottom"><p class="intro">Всё начинается с «а что, если?». Здесь идеи обретают форму — от первого наброска до собственного проекта.</p><a class="button" href="#ideas">Посмотреть, что дальше <span aria-hidden="true">↗</span></a></div>
-</section>
-<section class="section" id="ideas" aria-labelledby="ideas-title">
-<div class="section-head"><h2 id="ideas-title">От мысли к результату</h2><span>ШАГ ЗА ШАГОМ / 01—03</span></div>
-<div class="grid">
-<article class="card"><span class="number">01 / ПРИДУМАТЬ</span><div><h3>А почему бы и да?</h3><p>Сохранить мысль, увидеть возможность и дать любопытству немного свободы.</p></div></article>
-<article class="card"><span class="number">02 / ПОПРОБОВАТЬ</span><div><h3>Сделать первый шаг.</h3><p>Собрать первый вариант. Проверить идею в деле. Найти то, что действительно работает.</p></div></article>
-<article class="card"><span class="number">03 / СОЗДАТЬ</span><div><h3>Добавить своё.</h3><p>Характер, детали и смысл. Чтобы получилось то, чем хочется поделиться.</p></div></article>
+<h1 id="hero-title">Связка работает.<br><em>Теперь из чата.</em></h1>
+<div class="bottom">
+<div>
+<p class="intro">Я изменил этот файл прямо из обычного ChatGPT через GitHub. Если Vercel привязан к main, обновление должно улететь в прод автоматически.</p>
+<div class="status"><b></b> ChatGPT → GitHub → Vercel</div>
+</div>
+<a class="button" href="#ideas">Посмотреть изменения <span aria-hidden="true">↗</span></a>
 </div>
 </section>
-<section class="note" id="about" aria-labelledby="about-title"><h2 id="about-title">Маленький сайт.<br>Много возможностей.</h2><p>Личное пространство для экспериментов, вдохновения и будущих проектов. Не обязательно знать весь путь, чтобы начать движение.</p></section>
+
+<section class="section" id="ideas" aria-labelledby="ideas-title">
+<div class="section-head"><h2 id="ideas-title">Контрольное обновление</h2><span>09.09.2026 / LIVE</span></div>
+<div class="grid">
+<article class="card"><span class="number">01 / CHATGPT</span><div><h3>Изменение из чата.</h3><p>Без Codex: файл обновлён через GitHub-плагин прямо в этой переписке.</p></div></article>
+<article class="card"><span class="number">02 / GITHUB</span><div><h3>Commit в main.</h3><p>Изменение записано в основной ветке репозитория и готово к автодеплою.</p></div></article>
+<article class="card"><span class="number">03 / VERCEL</span><div><h3>Дальше сам.</h3><p>Если интеграция активна, Vercel увидит commit и автоматически обновит сайт.</p></div></article>
+</div>
+</section>
+
+<section class="note" id="about" aria-labelledby="about-title">
+<h2 id="about-title">Проверка закончена.<br>Теперь можно строить нормально.</h2>
+<p>Этот вариант специально заметно отличается от предыдущего: новая палитра, новый заголовок и блок статуса — чтобы сразу увидеть, что обновление реально пришло.</p>
+</section>
 </main>
 <footer><span>© 2026 Начало</span><a href="#top">Вернуться наверх ↑</a></footer>
 </div>
