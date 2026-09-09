@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#171914">
+<title>Админка — Начало</title>
+<style>
+:root{--bg:#10120f;--panel:#171a15;--panel2:#1e221b;--text:#f4f6ef;--muted:#9fa797;--line:#30362c;--accent:#b9dd68;--danger:#ff9b9b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.shell{width:min(1420px,calc(100% - 28px));margin:auto;padding:18px 0 40px}
+header{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:16px}.brand{font-size:24px;font-weight:900;letter-spacing:-.05em}.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-top:3px}.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+button,a.button{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:13px;min-height:44px;padding:0 14px;font:inherit;font-weight:720;font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.primary{background:var(--accent)!important;color:#202913!important;border-color:var(--accent)!important}.ghost{background:transparent!important}.danger{color:var(--danger)!important}
+.layout{display:grid;grid-template-columns:minmax(360px,520px) minmax(0,1fr);gap:14px;align-items:start}.editor,.preview{border:1px solid var(--line);background:var(--panel);border-radius:22px;overflow:hidden}.editor{padding:18px}.preview{position:sticky;top:14px}.preview-head{display:flex;justify-content:space-between;align-items:center;padding:13px 15px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}.preview-frame{background:#f4f1ea;padding:22px;min-height:760px;color:#20251f}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}.tab{background:transparent;border-color:var(--line);color:var(--muted)}.tab.active{background:var(--accent);color:#202913;border-color:var(--accent)}
+.panel{display:none}.panel.active{display:block}.section-title{font-size:12px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);margin:20px 0 10px}.field{display:grid;gap:7px;margin-bottom:13px}.field label{font-size:12px;color:#cbd1c5}.field input,.field textarea{width:100%;border:1px solid var(--line);background:#11140f;color:var(--text);border-radius:12px;padding:12px 13px;font:inherit;font-size:14px;outline:none}.field textarea{min-height:86px;resize:vertical}.field input:focus,.field textarea:focus{border-color:var(--accent)}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.color-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.color-field{display:flex;align-items:center;gap:10px;border:1px solid var(--line);padding:9px 10px;border-radius:12px;background:#11140f}.color-field input{width:38px;height:38px;border:0;background:transparent;padding:0}.color-field span{font-size:12px;color:#cbd1c5}
+.card-editor{border:1px solid var(--line);border-radius:15px;padding:12px;margin-bottom:10px;background:#131611}.card-editor strong{font-size:12px;color:var(--muted);display:block;margin-bottom:10px}
+.publish{margin-top:20px;border-top:1px solid var(--line);padding-top:18px}.notice{font-size:12px;color:var(--muted);line-height:1.55;margin:0 0 12px}.token{display:flex;gap:8px}.token input{flex:1;min-width:0}.status{margin-top:12px;padding:11px 12px;border-radius:12px;background:#11140f;color:var(--muted);font-size:12px;line-height:1.45}.status.ok{color:#cfeaa0}.status.err{color:#ffb3b3}
+.p-site{--pbg:#f4f1ea;--psurface:#fffdf8;--ptext:#20251f;--pmuted:#6f746b;--paccent:#b9dd68;--paccentText:#243016;--pline:#d9ddd3;background:var(--pbg);color:var(--ptext);border-radius:18px;padding:22px;min-height:710px;overflow:hidden}.p-nav{display:flex;justify-content:space-between;border-bottom:1px solid var(--pline);padding-bottom:16px;font-weight:850}.p-hero{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;padding:38px 0}.p-eyebrow{font-size:9px;text-transform:uppercase;letter-spacing:.14em;font-weight:800}.p-title{font-size:clamp(38px,5vw,72px);line-height:.94;letter-spacing:-.06em;margin:13px 0}.p-sub{color:var(--pmuted);line-height:1.55;font-size:12px;max-width:520px}.p-buttons{display:flex;gap:8px;margin-top:16px}.p-btn{padding:9px 12px;border-radius:999px;background:var(--ptext);color:var(--psurface);font-size:10px;font-weight:750}.p-btn.alt{background:var(--psurface);color:var(--ptext);border:1px solid var(--pline)}.p-visual{min-height:240px;border-radius:18px;background:radial-gradient(circle at 70% 25%,color-mix(in srgb,var(--paccent) 75%,white),transparent 30%),var(--psurface);border:1px solid var(--pline);position:relative;overflow:hidden}.p-visual img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}.p-cards{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;border-top:1px solid var(--pline);padding-top:20px}.p-card{background:var(--psurface);border:1px solid var(--pline);border-radius:14px;padding:14px;min-height:150px}.p-card:first-child{background:var(--paccent);color:var(--paccentText);border-color:transparent}.p-card h3{font-size:18px;margin:25px 0 7px}.p-card p{font-size:10px;line-height:1.45;color:var(--pmuted)}.p-card:first-child p{color:color-mix(in srgb,var(--paccentText) 70%,transparent)}.p-contact{margin-top:18px;background:var(--ptext);color:var(--psurface);border-radius:17px;padding:20px}.p-contact h3{font-size:26px;letter-spacing:-.05em;margin:8px 0}.p-contact p{font-size:10px;color:color-mix(in srgb,var(--psurface) 70%,transparent)}
+@media(max-width:960px){.layout{grid-template-columns:1fr}.preview{position:static}.preview-frame{min-height:0}.p-site{min-height:0}.p-hero{grid-template-columns:1fr}.p-cards{grid-template-columns:1fr}.row,.color-row{grid-template-columns:1fr}}@media(max-width:520px){.shell{width:min(100% - 16px,1420px)}header{align-items:flex-start;flex-direction:column}.top-actions{width:100%}.top-actions>*{flex:1}.editor{padding:14px}.preview-frame{padding:10px}.token{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header><div class="brand">Админка<small>редактор лендинга</small></div><div class="top-actions"><a class="button ghost" href="/" target="_blank">Открыть сайт ↗</a><button id="saveDraft">Сохранить черновик</button><button id="resetPublished">Сбросить</button></div></header>
+<div class="layout">
+<section class="editor">
+  <div class="tabs"><button class="tab active" data-tab="content">Контент</button><button class="tab" data-tab="cards">Карточки</button><button class="tab" data-tab="style">Визуал</button><button class="tab" data-tab="links">Ссылки</button></div>
+
+  <div class="panel active" data-panel="content">
+    <div class="field"><label>Название / логотип</label><input data-path="brand"></div>
+    <div class="field"><label>Маленькая подпись над заголовком</label><input data-path="eyebrow"></div>
+    <div class="field"><label>Главный заголовок</label><textarea data-path="title"></textarea></div>
+    <div class="field"><label>Описание</label><textarea data-path="subtitle"></textarea></div>
+    <div class="row"><div class="field"><label>Текст основной кнопки</label><input data-path="primaryButtonText"></div><div class="field"><label>Текст второй кнопки</label><input data-path="secondaryButtonText"></div></div>
+    <div class="field"><label>Подпись на визуальной карточке</label><input data-path="heroBadge"></div>
+    <div class="section-title">Финальный блок</div>
+    <div class="field"><label>Подпись</label><input data-path="contactEyebrow"></div>
+    <div class="field"><label>Заголовок</label><textarea data-path="contactTitle"></textarea></div>
+    <div class="field"><label>Текст</label><textarea data-path="contactText"></textarea></div>
+    <div class="field"><label>Текст кнопки</label><input data-path="contactButtonText"></div>
+    <div class="field"><label>Подвал</label><input data-path="footerText"></div>
+  </div>
+
+  <div class="panel" data-panel="cards">
+    <div class="field"><label>Заголовок секции</label><input data-path="featuresTitle"></div>
+    <div class="field"><label>Подпись секции</label><input data-path="featuresSubtitle"></div>
+    <div id="featureEditors"></div>
+    <div class="section-title">Цифры</div>
+    <div id="statEditors"></div>
+  </div>
+
+  <div class="panel" data-panel="style">
+    <div class="field"><label>URL изображения первого экрана</label><input data-path="heroImage" placeholder="https://..."></div>
+    <p class="notice">Если оставить поле пустым, будет абстрактная цветная композиция.</p>
+    <div class="color-row" id="colors"></div>
+  </div>
+
+  <div class="panel" data-panel="links">
+    <div class="field"><label>Пункт меню</label><input data-path="navLabel"></div>
+    <div class="field"><label>Ссылка основной кнопки</label><input data-path="primaryButtonUrl"></div>
+    <div class="field"><label>Ссылка второй кнопки</label><input data-path="secondaryButtonUrl"></div>
+    <div class="field"><label>Ссылка финальной кнопки</label><input data-path="contactButtonUrl"></div>
+  </div>
+
+  <div class="publish">
+    <div class="section-title">Публикация в GitHub</div>
+    <p class="notice">Черновик сохраняется только на этом устройстве. Чтобы изменения увидели все, нужен GitHub fine-grained token с доступом на запись к этому репозиторию. Токен не записывается в localStorage и не отправляется никуда, кроме GitHub API.</p>
+    <div class="token"><input id="token" type="password" autocomplete="off" placeholder="github_pat_…"><button class="primary" id="publish">Опубликовать</button></div>
+    <div class="status" id="status">Готово к редактированию.</div>
+  </div>
+</section>
+
+<section class="preview">
+  <div class="preview-head"><span>Живой предпросмотр</span><span id="draftState">опубликованная версия</span></div>
+  <div class="preview-frame"><div class="p-site" id="previewSite"></div></div>
+</section>
+</div>
+</div>
+<script>
+const repo="vkutseva58-sketch/chatgpt-mini-landing-",branch="main",path="content.json";
+const fallback={"brand":"начало","navLabel":"О проекте","eyebrow":"Пространство для идей","title":"Большие идеи начинаются с первого шага.","subtitle":"Лендинг, который можно менять без правки кода: тексты, кнопки, карточки, контакты и цвета управляются из отдельной админки.","primaryButtonText":"Посмотреть возможности","primaryButtonUrl":"#features","secondaryButtonText":"Связаться","secondaryButtonUrl":"#contact","heroBadge":"Редактируется из админки","heroImage":"","stats":[{"value":"01","label":"одна страница"},{"value":"100%","label":"ручное управление"},{"value":"∞","label":"вариантов текста"}],"featuresTitle":"Что можно менять","featuresSubtitle":"Без захода в код","features":[{"number":"01","title":"Тексты","text":"Заголовки, описания, кнопки и подписи — всё редактируется вручную."},{"number":"02","title":"Визуал","text":"Основные цвета, акцент и изображение первого экрана можно заменить из панели."},{"number":"03","title":"Контакты","text":"Меняй финальный призыв к действию и ссылку, куда должен перейти посетитель."}],"contactEyebrow":"Готово к следующему шагу","contactTitle":"Сайт меняется вместе с твоей идеей.","contactText":"Открой админку, поправь контент, посмотри предпросмотр и опубликуй обновление.","contactButtonText":"Открыть админку","contactButtonUrl":"/admin.html","footerText":"© 2026 Начало","colors":{"background":"#f4f1ea","surface":"#fffdf8","text":"#20251f","muted":"#6f746b","accent":"#b9dd68","accentText":"#243016","line":"#d9ddd3"}};
+let published=structuredClone(fallback),state=structuredClone(fallback);
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const statusEl=$("#status"),draftState=$("#draftState");
+
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function getPath(obj,path){return path.split(".").reduce((a,k)=>a?.[k],obj)}
+function setPath(obj,path,value){const keys=path.split(".");let cur=obj;keys.slice(0,-1).forEach(k=>cur=cur[k]);cur[keys.at(-1)]=value}
+function setStatus(msg,type=""){statusEl.className="status"+(type?" "+type:"");statusEl.textContent=msg}
+function markDraft(){draftState.textContent="есть несохранённые изменения"}
+
+function bindSimple(){
+  $$("[data-path]").forEach(el=>{
+    el.value=getPath(state,el.dataset.path)??"";
+    el.addEventListener("input",()=>{setPath(state,el.dataset.path,el.value);markDraft();renderPreview()});
+  });
+}
+function renderFeatureEditors(){
+  $("#featureEditors").innerHTML=state.features.map((f,i)=>`<div class="card-editor"><strong>Карточка ${i+1}</strong><div class="row"><div class="field"><label>Номер</label><input data-feature="${i}" data-key="number" value="${esc(f.number)}"></div><div class="field"><label>Заголовок</label><input data-feature="${i}" data-key="title" value="${esc(f.title)}"></div></div><div class="field"><label>Текст</label><textarea data-feature="${i}" data-key="text">${esc(f.text)}</textarea></div></div>`).join("");
+  $$("[data-feature]").forEach(el=>el.addEventListener("input",()=>{state.features[+el.dataset.feature][el.dataset.key]=el.value;markDraft();renderPreview()}));
+  $("#statEditors").innerHTML=state.stats.map((s,i)=>`<div class="row"><div class="field"><label>Значение ${i+1}</label><input data-stat="${i}" data-key="value" value="${esc(s.value)}"></div><div class="field"><label>Подпись</label><input data-stat="${i}" data-key="label" value="${esc(s.label)}"></div></div>`).join("");
+  $$("[data-stat]").forEach(el=>el.addEventListener("input",()=>{state.stats[+el.dataset.stat][el.dataset.key]=el.value;markDraft();renderPreview()}));
+}
+function renderColors(){
+  const labels={background:"Фон",surface:"Карточки",text:"Текст",muted:"Вторичный текст",accent:"Акцент",accentText:"Текст на акценте",line:"Линии"};
+  $("#colors").innerHTML=Object.keys(labels).map(k=>`<label class="color-field"><input type="color" data-color="${k}" value="${state.colors[k]}"><span>${labels[k]}</span></label>`).join("");
+  $$("[data-color]").forEach(el=>el.addEventListener("input",()=>{state.colors[el.dataset.color]=el.value;markDraft();renderPreview()}));
+}
+function hydrateForm(){
+  $$("[data-path]").forEach(el=>el.value=getPath(state,el.dataset.path)??"");
+  renderFeatureEditors();renderColors();renderPreview();
+}
+function renderPreview(){
+  const c=state,col=c.colors;
+  const root=$("#previewSite");
+  root.style.setProperty("--pbg",col.background);root.style.setProperty("--psurface",col.surface);root.style.setProperty("--ptext",col.text);root.style.setProperty("--pmuted",col.muted);root.style.setProperty("--paccent",col.accent);root.style.setProperty("--paccentText",col.accentText);root.style.setProperty("--pline",col.line);
+  const img=(c.heroImage||"").trim();
+  root.innerHTML=`<div class="p-nav"><span>${esc(c.brand)}↗</span><span>${esc(c.navLabel)}</span></div><div class="p-hero"><div><div class="p-eyebrow">${esc(c.eyebrow)}</div><div class="p-title">${esc(c.title)}</div><div class="p-sub">${esc(c.subtitle)}</div><div class="p-buttons"><span class="p-btn">${esc(c.primaryButtonText)}</span><span class="p-btn alt">${esc(c.secondaryButtonText)}</span></div></div><div class="p-visual">${img?'<img src="'+esc(img)+'" alt="">':""}</div></div><div class="p-cards">${c.features.map(f=>'<div class="p-card"><small>'+esc(f.number)+'</small><h3>'+esc(f.title)+'</h3><p>'+esc(f.text)+'</p></div>').join("")}</div><div class="p-contact"><div class="p-eyebrow">${esc(c.contactEyebrow)}</div><h3>${esc(c.contactTitle)}</h3><p>${esc(c.contactText)}</p></div>`;
+}
+async function load(){
+  try{const r=await fetch("./content.json?ts="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error();published=await r.json()}catch(e){published=structuredClone(fallback)}
+  const draft=localStorage.getItem("landing-admin-draft");
+  state=draft?JSON.parse(draft):structuredClone(published);
+  bindSimple();hydrateForm();draftState.textContent=draft?"загружен локальный черновик":"опубликованная версия";
+}
+$$(".tab").forEach(btn=>btn.addEventListener("click",()=>{$$(".tab").forEach(x=>x.classList.remove("active"));$$(".panel").forEach(x=>x.classList.remove("active"));btn.classList.add("active");$('[data-panel="'+btn.dataset.tab+'"]').classList.add("active")}));
+$("#saveDraft").addEventListener("click",()=>{localStorage.setItem("landing-admin-draft",JSON.stringify(state));draftState.textContent="черновик сохранён на устройстве";setStatus("Черновик сохранён локально.","ok")});
+$("#resetPublished").addEventListener("click",()=>{localStorage.removeItem("landing-admin-draft");state=structuredClone(published);hydrateForm();draftState.textContent="опубликованная версия";setStatus("Возвращена опубликованная версия.")});
+function toBase64Utf8(str){const bytes=new TextEncoder().encode(str);let bin="";const chunk=0x8000;for(let i=0;i<bytes.length;i+=chunk)bin+=String.fromCharCode(...bytes.subarray(i,i+chunk));return btoa(bin)}
+$("#publish").addEventListener("click",async()=>{
+  const token=$("#token").value.trim();if(!token){setStatus("Вставь GitHub token в поле выше. В чат его отправлять не нужно.","err");return}
+  const btn=$("#publish");btn.disabled=true;setStatus("Публикую в GitHub…");
+  try{
+    const api="https://api.github.com/repos/"+repo+"/contents/"+path;
+    const headers={Accept:"application/vnd.github+json",Authorization:"Bearer "+token,"X-GitHub-Api-Version":"2022-11-28"};
+    const get=await fetch(api+"?ref="+encodeURIComponent(branch),{headers});if(!get.ok)throw new Error("GitHub GET: "+get.status);
+    const current=await get.json();
+    const body={message:"Update landing content from admin",content:toBase64Utf8(JSON.stringify(state,null,2)+"\n"),sha:current.sha,branch};
+    const put=await fetch(api,{method:"PUT",headers:{...headers,"Content-Type":"application/json"},body:JSON.stringify(body)});
+    const result=await put.json();if(!put.ok)throw new Error(result.message||("GitHub PUT: "+put.status));
+    published=structuredClone(state);localStorage.removeItem("landing-admin-draft");draftState.textContent="опубликовано";setStatus("Готово. Commit "+result.commit.sha.slice(0,7)+". Vercel должен автоматически обновить сайт.","ok");
+  }catch(e){setStatus("Не получилось опубликовать: "+e.message,"err")}finally{btn.disabled=false}
+});
+load();
+</script>
+</body>
+</html>
