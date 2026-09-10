@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07110d">
+<title>OUTBREAK // ZERO</title>
+<style>
+:root{--bg:#07110d;--panel:#0d1b14;--panel2:#12251b;--line:#234332;--text:#e9f3ec;--muted:#87a393;--green:#8df28f;--acid:#c9ff63;--red:#ff625f;--amber:#ffc15c;--blue:#75c9ff}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% -20%,#163322 0,#07110d 45%,#040906 100%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input{font:inherit}button{color:inherit}.app{min-height:100vh;padding:18px}.topbar{max-width:1500px;margin:0 auto 14px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:12px}.mark{width:38px;height:38px;border:1px solid var(--green);border-radius:50%;display:grid;place-items:center;box-shadow:0 0 24px #8df28f30}.mark:before{content:"";width:10px;height:10px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green)}.brand b{display:block;font-size:14px;letter-spacing:.16em}.brand span{display:block;color:var(--muted);font-size:11px;letter-spacing:.1em;margin-top:3px}.top-actions{display:flex;gap:8px}.ghost,.speed{background:#0c1812;border:1px solid var(--line);border-radius:10px;padding:9px 12px;text-decoration:none;cursor:pointer}.ghost:hover,.speed:hover,.speed.active{border-color:#5d8d70;background:#13261c}.layout{max-width:1500px;margin:auto;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:14px}.board,.sidebar{background:linear-gradient(180deg,#0d1c15e8,#09130ee8);border:1px solid var(--line);border-radius:20px;box-shadow:0 24px 70px #0008;overflow:hidden}.board{position:relative;min-height:760px}.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-bottom:1px solid var(--line)}.metric{background:#0b1811;padding:14px 16px}.metric span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}.metric b{display:block;font-size:24px;letter-spacing:-.04em;margin-top:3px}.metric.infected b{color:var(--red)}.metric.dead b{color:#d6d8d6}.metric.dna b{color:var(--acid)}.map-wrap{position:relative;height:570px;overflow:hidden;background:radial-gradient(circle at 50% 45%,#163926 0,#08150f 68%,#06110c 100%)}.grid{position:absolute;inset:0;background-image:linear-gradient(#8df28f0a 1px,transparent 1px),linear-gradient(90deg,#8df28f0a 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(to bottom,#0009,#0004)}svg{width:100%;height:100%;display:block;position:relative}.land{fill:#173b28;stroke:#3a6d4c;stroke-width:1.5;transition:.25s}.land.hot{fill:#543126}.route{stroke:#6fcf8a33;stroke-width:1;fill:none;stroke-dasharray:4 5}.route.active{stroke:#ff756355;stroke-width:1.5}.node{cursor:pointer}.node circle.outer{fill:#08130d;stroke:#8bbd99;stroke-width:1.2}.node circle.fill{fill:#8df28f;opacity:.9;transform-box:fill-box;transform-origin:center}.node.infected circle.outer{stroke:#ff7b69}.node.infected circle.fill{fill:#ff625f;filter:drop-shadow(0 0 7px #ff625f)}.node.deadly circle.outer{stroke:#d9ded9}.node.deadly circle.fill{fill:#d9ded9}.node.selected circle.outer{stroke:var(--acid);stroke-width:2.6;filter:drop-shadow(0 0 6px #c9ff63)}.node text{fill:#a9c3b2;font-size:10px;letter-spacing:.03em;pointer-events:none}.node:hover text,.node.selected text{fill:white}.map-note{position:absolute;left:18px;bottom:14px;font-size:11px;color:#719181;background:#07110dba;border:1px solid #234332;padding:8px 10px;border-radius:9px;backdrop-filter:blur(8px)}.ticker{height:118px;border-top:1px solid var(--line);padding:14px 18px;overflow:hidden}.ticker-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.ticker-head b{font-size:11px;letter-spacing:.12em;text-transform:uppercase}.ticker-head span{font-size:10px;color:var(--muted)}#events{display:grid;gap:5px;font-size:12px;color:#9fb5a7}.event{display:flex;gap:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.event time{color:#587361;min-width:54px}.sidebar{min-height:760px;display:flex;flex-direction:column}.side-head{padding:18px;border-bottom:1px solid var(--line)}.side-head small{display:block;color:var(--muted);font-size:10px;letter-spacing:.13em;text-transform:uppercase}.side-head h2{margin:5px 0 0;font-size:26px;letter-spacing:-.045em}.cure{padding:16px 18px;border-bottom:1px solid var(--line)}.bar-label{display:flex;justify-content:space-between;font-size:11px;margin-bottom:8px}.bar-label span{color:var(--muted)}.bar{height:8px;border-radius:999px;background:#07100c;overflow:hidden;border:1px solid #213b2d}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#58a9df,#9de3ff);transition:.35s}.tabs{display:grid;grid-template-columns:repeat(3,1fr);padding:10px;gap:7px;border-bottom:1px solid var(--line)}.tab{border:1px solid var(--line);background:#0b1811;border-radius:9px;padding:9px 5px;font-size:11px;cursor:pointer}.tab.active{background:#193123;border-color:#4f805f}.upgrade-list{padding:12px;display:grid;gap:8px;overflow:auto;max-height:420px}.upgrade{border:1px solid var(--line);background:#0b1811;border-radius:13px;padding:12px;cursor:pointer;text-align:left;transition:.15s}.upgrade:hover:not(:disabled){transform:translateY(-1px);border-color:#547b61}.upgrade:disabled{opacity:.46;cursor:not-allowed}.upgrade-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.upgrade b{font-size:13px}.cost{color:var(--acid);font-size:12px}.upgrade p{margin:6px 0 0;color:var(--muted);font-size:11px;line-height:1.45}.lvl{font-size:10px;color:#769482;margin-left:7px}.region-card{margin-top:auto;border-top:1px solid var(--line);padding:16px 18px;background:#0a1610}.region-card small{color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-size:9px}.region-card h3{margin:5px 0 10px;font-size:18px}.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px}.mini-stats div{background:#0f2017;border:1px solid #1f3b2b;padding:8px;border-radius:8px}.mini-stats span{display:block;color:var(--muted);font-size:9px;margin-bottom:3px}.overlay{position:fixed;inset:0;background:#020604db;display:grid;place-items:center;z-index:20;padding:20px;backdrop-filter:blur(10px)}.overlay.hidden{display:none}.modal{width:min(620px,100%);background:linear-gradient(180deg,#10251a,#09130e);border:1px solid #315740;border-radius:24px;padding:30px;box-shadow:0 35px 100px #000}.modal .kicker{font-size:10px;color:var(--green);text-transform:uppercase;letter-spacing:.18em}.modal h1{font-size:clamp(42px,9vw,78px);line-height:.86;letter-spacing:-.07em;margin:14px 0 20px}.modal p{color:#91aa9a;line-height:1.65;margin:0 0 18px}.field{display:grid;gap:7px;margin:16px 0}.field label{font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted)}.field input{width:100%;background:#07110d;border:1px solid #315740;color:white;padding:13px 14px;border-radius:11px;outline:none}.field input:focus{border-color:var(--green)}.start-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px}.start-region{font-size:12px;color:var(--muted)}.primary{border:0;background:var(--acid);color:#10200f;padding:13px 18px;border-radius:11px;font-weight:800;cursor:pointer}.primary:disabled{opacity:.35;cursor:not-allowed}.result h1{font-size:52px}.result .score{font-size:15px;color:var(--acid)}.result-actions{display:flex;gap:9px;margin-top:20px}.danger{background:var(--red);color:white}.legend{display:flex;gap:13px;flex-wrap:wrap;font-size:9px;color:#86a090;padding:10px 18px;border-top:1px solid var(--line)}.dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px}.healthy-dot{background:var(--green)}.infected-dot{background:var(--red)}.dead-dot{background:#d9ded9}.pulse{animation:pulse 1.4s infinite}@keyframes pulse{50%{opacity:.45;transform:scale(.75)}}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}.sidebar{min-height:auto}.upgrade-list{max-height:none}.board{min-height:auto}.map-wrap{height:520px}}
+@media(max-width:640px){.app{padding:8px}.topbar{padding:4px}.brand span{display:none}.layout{gap:8px}.board,.sidebar{border-radius:15px}.hud{grid-template-columns:1fr 1fr}.metric{padding:10px 12px}.metric b{font-size:20px}.map-wrap{height:390px}.ticker{height:110px;padding:11px 12px}.node text{font-size:8px}.map-note{font-size:9px;left:10px;bottom:8px}.sidebar{min-height:0}.upgrade-list{grid-template-columns:1fr}.modal{padding:22px}.modal h1{font-size:50px}.start-row{align-items:stretch;flex-direction:column}.primary{width:100%}.top-actions .ghost{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="brand"><div class="mark"></div><div><b>OUTBREAK // ZERO</b><span>ГЛОБАЛЬНЫЙ СТРАТЕГИЧЕСКИЙ СИМУЛЯТОР</span></div></div>
+    <div class="top-actions"><a class="ghost" href="/">← На сайт</a><button class="speed" data-speed="0">Ⅱ</button><button class="speed active" data-speed="1">×1</button><button class="speed" data-speed="2">×2</button><button class="speed" data-speed="4">×4</button></div>
+  </div>
+  <div class="layout">
+    <section class="board">
+      <div class="hud">
+        <div class="metric"><span>Здоровы</span><b id="healthy">8.12 млрд</b></div>
+        <div class="metric infected"><span>Заражены</span><b id="infected">0</b></div>
+        <div class="metric dead"><span>Погибли</span><b id="dead">0</b></div>
+        <div class="metric dna"><span>Эволюция</span><b id="dna">0 ◈</b></div>
+      </div>
+      <div class="map-wrap">
+        <div class="grid"></div>
+        <svg id="map" viewBox="0 0 1000 520" aria-label="Игровая карта мира">
+          <g id="continents">
+            <path class="land" d="M80 105 L135 67 235 71 295 105 280 155 235 170 211 210 164 199 139 154 94 146Z"/>
+            <path class="land" d="M246 218 L288 237 308 291 294 348 271 415 241 389 225 321 229 267Z"/>
+            <path class="land" d="M430 100 L489 82 553 98 579 129 550 155 510 147 482 174 444 154Z"/>
+            <path class="land" d="M445 177 L515 163 556 201 550 268 516 337 476 329 447 274 427 218Z"/>
+            <path class="land" d="M557 92 L645 72 744 86 825 118 868 161 838 190 763 176 722 205 672 184 625 203 579 166Z"/>
+            <path class="land" d="M653 199 L720 198 772 231 754 277 708 287 671 254Z"/>
+            <path class="land" d="M775 248 L833 263 858 296 822 318 788 302Z"/>
+            <path class="land" d="M824 346 L894 359 920 402 882 427 827 405 804 374Z"/>
+            <path class="land" d="M886 185 L910 175 925 205 908 229 889 214Z"/>
+            <path class="land" d="M343 50 L385 35 417 55 399 86 357 88Z"/>
+          </g>
+          <g id="routes"></g>
+          <g id="nodes"></g>
+        </svg>
+        <div class="map-note">Выбери регион на карте • модель полностью вымышленная</div>
+      </div>
+      <div class="ticker">
+        <div class="ticker-head"><b>Глобальные события</b><span id="day">День 0</span></div>
+        <div id="events"></div>
+      </div>
+      <div class="legend"><span><i class="dot healthy-dot"></i>здоровые</span><span><i class="dot infected-dot"></i>заражённые</span><span><i class="dot dead-dot"></i>погибшие</span></div>
+    </section>
+    <aside class="sidebar">
+      <div class="side-head"><small>Образец</small><h2 id="pathogenName">ZERO-01</h2></div>
+      <div class="cure"><div class="bar-label"><span>Исследование лекарства</span><b id="cureText">0%</b></div><div class="bar"><i id="cureBar"></i></div></div>
+      <div class="tabs"><button class="tab active" data-tab="spread">Передача</button><button class="tab" data-tab="resist">Адаптация</button><button class="tab" data-tab="symptom">Симптомы</button></div>
+      <div class="upgrade-list" id="upgrades"></div>
+      <div class="region-card"><small>Выбранный регион</small><h3 id="regionName">—</h3><div class="mini-stats"><div><span>Население</span><b id="rPop">—</b></div><div><span>Заражено</span><b id="rInf">—</b></div><div><span>Погибло</span><b id="rDead">—</b></div><div><span>Состояние</span><b id="rState">—</b></div></div></div>
+    </aside>
+  </div>
+</div>
+<div class="overlay" id="startOverlay">
+  <div class="modal">
+    <div class="kicker">OUTBREAK // ZERO</div>
+    <h1>ЗАРАЗИ<br>ВЕСЬ МИР</h1>
+    <p>Запусти вымышленную вспышку, развивай её за очки эволюции и успей распространиться по планете раньше, чем человечество завершит исследование лекарства.</p>
+    <div class="field"><label for="nameInput">Название образца</label><input id="nameInput" maxlength="22" value="ZERO-01"></div>
+    <div class="start-row"><div class="start-region">Старт: <b id="startRegionLabel">нажми на регион на карте</b></div><button class="primary" id="startBtn" disabled>Начать вспышку</button></div>
+  </div>
+</div>
+<div class="overlay hidden" id="resultOverlay"><div class="modal result"><div class="kicker" id="resultKicker">ИГРА ОКОНЧЕНА</div><h1 id="resultTitle">ПОБЕДА</h1><p id="resultText"></p><div class="score" id="resultScore"></div><div class="result-actions"><button class="primary" onclick="location.reload()">Играть снова</button><a class="ghost" href="/">На сайт</a></div></div></div>
+<script>
+(function(){
+'use strict';
+const WORLD=8120; // млн, игровая условность
+const regions=[
+ {n:'Северная Америка',p:605,x:185,y:128,c:'cool',links:[1,3,6,13]},
+ {n:'Латинская Америка',p:660,x:270,y:285,c:'warm',links:[0,4,5]},
+ {n:'Западная Европа',p:455,x:492,y:132,c:'cool',links:[3,4,6,13]},
+ {n:'Восточная Европа',p:295,x:555,y:128,c:'cool',links:[0,2,6,7,13]},
+ {n:'Северная Африка',p:270,x:495,y:210,c:'warm',links:[1,2,5,6]},
+ {n:'Африка южнее Сахары',p:1220,x:505,y:282,c:'hot',links:[1,4,6,8]},
+ {n:'Ближний Восток',p:410,x:605,y:188,c:'hot',links:[0,2,3,4,5,7,8]},
+ {n:'Центральная Азия',p:310,x:663,y:142,c:'dry',links:[3,6,8,9,13]},
+ {n:'Южная Азия',p:1950,x:690,y:235,c:'hot',links:[5,6,7,9,10]},
+ {n:'Восточная Азия',p:1660,x:787,y:158,c:'cool',links:[7,8,10,11,13]},
+ {n:'Юго-Восточная Азия',p:690,x:774,y:257,c:'warm',links:[8,9,11,12]},
+ {n:'Япония и Корея',p:200,x:885,y:198,c:'cool',links:[9,10,12]},
+ {n:'Океания',p:46,x:856,y:382,c:'warm',links:[10,11]},
+ {n:'Север Евразии',p:240,x:680,y:94,c:'cold',links:[0,2,3,7,9]}
+];
+let state={day:0,dna:8,cure:0,speed:1,started:false,ended:false,selected:null,start:null,tab:'spread',name:'ZERO-01',detected:false,up:{}};
+regions.forEach(r=>{r.i=0;r.d=0;r.discovered=false});
+const upgrades={
+ spread:[
+  {id:'mobility',name:'Глобальная мобильность',desc:'Ускоряет переход между связанными регионами.',cost:7,max:3,effect:'spread'},
+  {id:'water',name:'Морские маршруты',desc:'Повышает шанс дальнего переноса между континентами.',cost:10,max:2,effect:'spread'},
+  {id:'cities',name:'Городские цепочки',desc:'Ускоряет рост заражений внутри густонаселённых регионов.',cost:12,max:3,effect:'infect'}
+ ],
+ resist:[
+  {id:'cold',name:'Холодные зоны',desc:'Снижает штраф распространения в холодных регионах.',cost:9,max:2,effect:'cold'},
+  {id:'heat',name:'Жаркие зоны',desc:'Снижает штраф распространения в жарких регионах.',cost:9,max:2,effect:'heat'},
+  {id:'stealth',name:'Скрытность',desc:'Замедляет обнаружение и темп исследований.',cost:14,max:3,effect:'stealth'}
+ ],
+ symptom:[
+  {id:'mild',name:'Лёгкие симптомы',desc:'Больше контактов — быстрее рост, но выше заметность.',cost:8,max:2,effect:'infect'},
+  {id:'severe',name:'Тяжёлая стадия',desc:'Повышает тяжесть и смертность, ускоряя исследования.',cost:15,max:2,effect:'lethal'},
+  {id:'critical',name:'Критическая стадия',desc:'Резко повышает смертность. Лучше брать после широкого распространения.',cost:24,max:2,effect:'lethal'}
+ ]
+};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const nodes=$('#nodes'), routes=$('#routes');
+const uniq=[];regions.forEach((r,i)=>r.links.forEach(j=>{let k=[i,j].sort((a,b)=>a-b).join('-');if(!uniq.includes(k)){uniq.push(k);let b=regions[j];routes.insertAdjacentHTML('beforeend',`<line class="route" data-route="${k}" x1="${r.x}" y1="${r.y}" x2="${b.x}" y2="${b.y}"/>`)}}));
+regions.forEach((r,i)=>nodes.insertAdjacentHTML('beforeend',`<g class="node" data-i="${i}" transform="translate(${r.x} ${r.y})"><circle class="outer" r="10"></circle><circle class="fill" r="4"></circle><text x="14" y="4">${r.n}</text></g>`));
+function fmt(v){if(v<.001)return '0';if(v<1)return Math.round(v*1000).toLocaleString('ru-RU')+' тыс.';if(v<1000)return Math.round(v).toLocaleString('ru-RU')+' млн';return (v/1000).toFixed(v>3000?2:1).replace('.',',')+' млрд'}
+function total(k){return regions.reduce((s,r)=>s+r[k],0)}
+function lvl(id){return state.up[id]||0}
+function log(msg){let box=$('#events'),t=`День ${Math.floor(state.day)}`;box.insertAdjacentHTML('afterbegin',`<div class="event"><time>${t}</time><span>${msg}</span></div>`);while(box.children.length>4)box.lastElementChild.remove()}
+function select(i){state.selected=i;$$('.node').forEach(n=>n.classList.toggle('selected',+n.dataset.i===i));let r=regions[i];$('#regionName').textContent=r.n;$('#rPop').textContent=fmt(r.p);$('#rInf').textContent=fmt(r.i);$('#rDead').textContent=fmt(r.d);$('#rState').textContent=r.d>r.p*.6?'разрушен':r.i>r.p*.25?'кризис':r.i>1?'вспышка':'стабильно';if(!state.started){state.start=i;$('#startRegionLabel').textContent=r.n;$('#startBtn').disabled=false}}
+$$('.node').forEach(n=>n.addEventListener('click',()=>select(+n.dataset.i)));
+function renderUpgrades(){let list=$('#upgrades');list.innerHTML='';upgrades[state.tab].forEach(u=>{let l=lvl(u.id),cost=u.cost+l*5,btn=document.createElement('button');btn.className='upgrade';btn.disabled=l>=u.max||state.dna<cost||!state.started;btn.innerHTML=`<div class="upgrade-top"><b>${u.name}<span class="lvl">${l}/${u.max}</span></b><span class="cost">${l>=u.max?'MAX':cost+' ◈'}</span></div><p>${u.desc}</p>`;btn.onclick=()=>{if(state.dna<cost||l>=u.max)return;state.dna-=cost;state.up[u.id]=l+1;log(`Эволюция: ${u.name} → уровень ${l+1}`);render()};list.appendChild(btn)})}
+$$('.tab').forEach(b=>b.onclick=()=>{state.tab=b.dataset.tab;$$('.tab').forEach(x=>x.classList.toggle('active',x===b));renderUpgrades()});
+$$('.speed').forEach(b=>b.onclick=()=>{state.speed=+b.dataset.speed;$$('.speed').forEach(x=>x.classList.toggle('active',x===b));});
+function infectRate(r){let rate=.075+lvl('cities')*.014+lvl('mild')*.011;if((r.c==='cold'||r.c==='cool')&&!lvl('cold'))rate*=.72;if((r.c==='hot'||r.c==='warm')&&!lvl('heat'))rate*=.78;return rate}
+function lethality(){return lvl('severe')*.0012+lvl('critical')*.0045}
+function spreadChance(){return .004+lvl('mobility')*.004+lvl('water')*.0025}
+function cureRate(){let severity=lvl('mild')*.04+lvl('severe')*.12+lvl('critical')*.28;let stealth=1-lvl('stealth')*.16;return (.0025+severity*.0035)*stealth}
+function tick(){if(!state.started||state.ended||state.speed===0)return;for(let s=0;s<state.speed;s++){state.day+=.45;let newGlobal=0;regions.forEach((r,i)=>{if(r.i<=0)return;let healthy=Math.max(0,r.p-r.i-r.d),growth=Math.min(healthy,r.i*infectRate(r)*(healthy/r.p));if(state.cure>=100)growth-=r.i*.12;growth=Math.max(-r.i,growth);r.i+=growth;newGlobal+=Math.max(0,growth);let deaths=Math.min(r.i,r.i*lethality());r.i-=deaths;r.d+=deaths;if(r.i>.02&&!r.discovered){r.discovered=true;log(`${r.n}: подтверждены первые случаи`)}r.links.forEach(j=>{let to=regions[j];if(to.i<.02&&r.i/r.p>.002&&Math.random()<spreadChance()*(1+Math.min(4,r.i/r.p*30))){to.i=Math.max(to.i,.003);log(`Новая вспышка: ${to.n}`)}})});
+ let inf=total('i'),dead=total('d');state.dna+=Math.min(1.3,newGlobal*.006)+Math.random()*.04;if(!state.detected&&inf>2){state.detected=true;log('Международные службы начали расследование вспышки')}
+ if(state.detected){state.cure=Math.min(100,state.cure+cureRate()*(1+Math.sqrt(inf/WORLD)*3));if(state.cure>25&&!state.q1){state.q1=true;log('Исследование лекарства достигло 25%')}if(state.cure>60&&!state.q2){state.q2=true;log('Глобальная коалиция ускоряет исследования')}if(state.cure>=100&&!state.q3){state.q3=true;log('Лекарство разработано. Заражения начинают снижаться')}}
+ let healthy=WORLD-inf-dead;if(healthy<.05&&inf+dead>WORLD*.95)end(true);if(state.cure>=100&&inf<.01)end(false)}render()}
+function render(){let inf=total('i'),dead=total('d'),healthy=Math.max(0,WORLD-inf-dead);$('#healthy').textContent=fmt(healthy);$('#infected').textContent=fmt(inf);$('#dead').textContent=fmt(dead);$('#dna').textContent=Math.floor(state.dna)+' ◈';$('#day').textContent='День '+Math.floor(state.day);$('#cureText').textContent=Math.floor(state.cure)+'%';$('#cureBar').style.width=state.cure+'%';if(state.selected!==null)select(state.selected);$$('.node').forEach(n=>{let r=regions[+n.dataset.i],ratio=(r.i+r.d)/r.p;n.classList.toggle('infected',r.i>.001);n.classList.toggle('deadly',r.d>r.i&&r.d>1);let fill=n.querySelector('.fill');fill.setAttribute('r',String(3+Math.min(8,ratio*15)))});$$('.route').forEach(l=>{let [a,b]=l.dataset.route.split('-').map(Number);l.classList.toggle('active',regions[a].i>.05||regions[b].i>.05)});renderUpgrades()}
+function end(win){state.ended=true;state.speed=0;let inf=total('i'),dead=total('d');$('#resultOverlay').classList.remove('hidden');$('#resultKicker').textContent=win?'МИР ПАЛ':'ВСПЫШКА ОСТАНОВЛЕНА';$('#resultTitle').textContent=win?'ПОБЕДА':'ПОРАЖЕНИЕ';$('#resultText').textContent=win?`${state.name} охватил планету раньше, чем исследование лекарства смогло остановить распространение.`:`Лекарство завершено, а последние активные очаги ${state.name} исчезли.`;$('#resultScore').textContent=`День ${Math.floor(state.day)} • заражено ${fmt(inf)} • погибло ${fmt(dead)} • эволюций ${Object.values(state.up).reduce((a,b)=>a+b,0)}`}
+$('#startBtn').onclick=()=>{state.name=($('#nameInput').value||'ZERO-01').trim().slice(0,22);$('#pathogenName').textContent=state.name;regions[state.start].i=.02;state.started=true;state.selected=state.start;$('#startOverlay').classList.add('hidden');log(`${state.name}: вспышка началась — ${regions[state.start].n}`);render()};
+// Пока стартовое окно открыто, клики должны проходить к выбору региона: выбираем случайный по тапу на подсказку, а удобнее — кнопками ниже.
+const chooser=document.createElement('div');chooser.style.cssText='display:flex;gap:6px;flex-wrap:wrap;margin-top:12px';regions.forEach((r,i)=>{let b=document.createElement('button');b.className='ghost';b.style.fontSize='10px';b.textContent=r.n;b.onclick=()=>select(i);chooser.appendChild(b)});document.querySelector('#startOverlay .field').after(chooser);
+render();setInterval(tick,650);
+})();
+</script>
+</body>
+</html>
