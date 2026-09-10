@@ -50,17 +50,19 @@ document.addEventListener('click',e=>{
 
 function breathePathogen(){
   const p=$('#pathogenVisual');if(!p||reduced)return;
-  let raf=0,last=0;
+  let raf=0;
   const move=e=>{
-    if(mobile)return;
-    if(raf)return;
+    if(mobile||raf)return;
     raf=requestAnimationFrame(()=>{
       raf=0;const r=p.getBoundingClientRect(),dx=(e.clientX-(r.left+r.width/2))/r.width,dy=(e.clientY-(r.top+r.height/2))/r.height;
-      p.style.setProperty('--look-x',(dx*3).toFixed(2)+'px');p.style.setProperty('--look-y',(dy*3).toFixed(2)+'px');last=performance.now();
+      p.style.setProperty('--look-x',(dx*3).toFixed(2)+'px');p.style.setProperty('--look-y',(dy*3).toFixed(2)+'px');
     });
   };
   p.addEventListener('pointermove',move,{passive:true});
   p.addEventListener('pointerleave',()=>{p.style.setProperty('--look-x','0px');p.style.setProperty('--look-y','0px')},{passive:true});
 }
 breathePathogen();
+
+const bioCss=document.createElement('link');bioCss.rel='stylesheet';bioCss.href='/bio-concept.css?v=1';document.head.appendChild(bioCss);
+const bioScript=document.createElement('script');bioScript.src='/bio-concept.js?v=1';bioScript.defer=true;document.body.appendChild(bioScript);
 })();
