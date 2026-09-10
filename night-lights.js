@@ -1,0 +1,22 @@
+(()=>{'use strict';
+const svg=document.querySelector('#map'),map=document.querySelector('.map-wrap'),nodes=document.querySelector('#nodes');if(!svg||!map||!nodes)return;const NS='http://www.w3.org/2000/svg';
+const cities=[
+['Торонто',-79.38,43.65,0,1],['Ванкувер',-123.12,49.28,0,0],['Монреаль',-73.57,45.50,0,0],
+['Нью-Йорк',-74.00,40.71,1,1],['Лос-Анджелес',-118.24,34.05,1,1],['Чикаго',-87.63,41.88,1,0],['Хьюстон',-95.37,29.76,1,0],['Майами',-80.19,25.76,1,0],
+['Мехико',-99.13,19.43,2,1],['Сан-Паулу',-46.63,-23.55,3,1],['Рио',-43.17,-22.91,3,0],['Буэнос-Айрес',-58.38,-34.60,4,1],
+['Лондон',-.13,51.51,5,1],['Париж',2.35,48.86,6,1],['Берлин',13.40,52.52,6,0],['Мадрид',-3.70,40.42,6,0],['Рим',12.50,41.90,6,0],['Амстердам',4.90,52.37,6,0],
+['Варшава',21.01,52.23,7,0],['Стамбул',28.98,41.01,13,1],['Москва',37.62,55.75,12,1],['Каир',31.24,30.04,8,1],['Лагос',3.38,6.52,9,1],['Найроби',36.82,-1.29,10,0],['Йоханнесбург',28.05,-26.20,11,1],
+['Дубай',55.27,25.20,13,1],['Тегеран',51.39,35.69,13,0],['Дели',77.10,28.70,14,1],['Мумбаи',72.88,19.08,14,1],['Бангалор',77.59,12.97,14,0],['Ташкент',69.24,41.30,15,0],
+['Пекин',116.41,39.90,16,1],['Шанхай',121.47,31.23,16,1],['Шэньчжэнь',114.06,22.54,16,1],['Токио',139.69,35.68,17,1],['Осака',135.50,34.69,17,0],['Сеул',126.98,37.57,18,1],
+['Бангкок',100.50,13.75,18,1],['Хошимин',106.63,10.82,18,0],['Сингапур',103.82,1.35,18,1],['Джакарта',106.85,-6.21,19,1],['Манила',120.98,14.60,18,0],
+['Сидней',151.21,-33.87,20,1],['Мельбурн',144.96,-37.81,20,0],['Окленд',174.76,-36.85,21,0]
+];
+const projection=window.d3?d3.geoEquirectangular().scale(151).translate([500,260]):null;const fallback=(lon,lat)=>[500+lon*2.55,260-lat*2.5];
+const vignette=document.createElement('div');vignette.className='night-world';map.prepend(vignette);const caption=document.createElement('div');caption.className='night-map-caption';caption.textContent='URBAN LIGHT NETWORK // LIVE';map.appendChild(caption);
+const layer=document.createElementNS(NS,'g');layer.setAttribute('class','night-lights-layer');const routes=document.querySelector('#routes');svg.insertBefore(layer,routes||nodes);
+function seeded(seed){let s=seed*9301+49297;return()=>((s=(s*233280+49297)%233280)/233280)}
+const groups=[];cities.forEach((c,i)=>{const [name,lon,lat,region,major]=c,p=projection?projection([lon,lat]):fallback(lon,lat);if(!p)return;const g=document.createElementNS(NS,'g');g.setAttribute('class','city-cluster');g.dataset.region=region;g.dataset.name=name;g.setAttribute('transform',`translate(${p[0].toFixed(1)} ${p[1].toFixed(1)})`);const halo=document.createElementNS(NS,'circle');halo.setAttribute('class','city-halo');halo.setAttribute('r',major?'10':'7');g.appendChild(halo);const rand=seeded(i+11),count=major?7:4;for(let k=0;k<count;k++){const a=rand()*Math.PI*2,d=k===0?0:2+rand()*(major?7:5),dot=document.createElementNS(NS,'circle');dot.setAttribute('class','city-light'+(major?' major':'')+(k===0?' core':''));dot.setAttribute('cx',(Math.cos(a)*d).toFixed(2));dot.setAttribute('cy',(Math.sin(a)*d*.62).toFixed(2));dot.setAttribute('r',(k===0?(major?1.45:1.15):(.45+rand()*.68)).toFixed(2));dot.style.setProperty('--tw',(2.4+rand()*3.4).toFixed(2)+'s');dot.style.setProperty('--delay',(-rand()*4).toFixed(2)+'s');g.appendChild(dot)}const ring=document.createElementNS(NS,'circle');ring.setAttribute('class','night-light-scan');ring.setAttribute('r','4');g.appendChild(ring);layer.appendChild(g);groups.push(g)});
+let lastState=new Map;function intensity(node){if(!node)return{p:0,dead:false};const fill=node.querySelector('circle.fill'),r=parseFloat(fill?.getAttribute('r')||'2.8'),p=Math.max(0,Math.min(1,(r-2.8)/7.2));return{p,dead:node.classList.contains('deadly')}}
+function update(){groups.forEach(g=>{const idx=+g.dataset.region,node=nodes.querySelector(`.node[data-i="${idx}"]`),s=intensity(node),prev=lastState.get(g)||{p:0,dead:false};g.classList.toggle('infected',s.p>.06&&!s.dead);g.classList.toggle('severe',s.p>.55&&!s.dead);g.classList.toggle('blackout',s.dead);let op=s.dead?.08:Math.max(.22,1-s.p*.62);if(s.p>.55&&!s.dead)op*=.72;g.style.opacity=op.toFixed(2);if((s.dead&&!prev.dead)||(s.p>.72&&prev.p<=.72)){g.classList.remove('blackout-shock');void g.getBBox();g.classList.add('blackout-shock');setTimeout(()=>g.classList.remove('blackout-shock'),900)}lastState.set(g,s)});requestAnimationFrame(update)}
+new MutationObserver(()=>{if(!document.hidden){} }).observe(nodes,{attributes:true,subtree:true,attributeFilter:['class','r']});requestAnimationFrame(update);
+})();
