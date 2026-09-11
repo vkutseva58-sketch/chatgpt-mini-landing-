@@ -1,0 +1,31 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#11100d"><title>QUARANTINE // CONTROL</title><link rel="stylesheet" href="/quarantine.css?v=1"></head><body>
+<div class="qc-app">
+<header class="qc-top"><div class="qc-brand"><i></i><div><b>QUARANTINE // CONTROL</b><span>ПОГРАНИЧНЫЙ КАРАНТИННЫЙ ТЕРМИНАЛ №07</span></div></div><div class="qc-top-actions"><div class="qc-shift"><small>Смена</small><b id="dayLabel">День 1</b></div><div class="qc-clock"><small>До конца</small><b id="clock">02:30</b></div><a href="/" class="qc-back">← На сайт</a></div></header>
+<main class="qc-layout">
+<section class="qc-booth">
+<div class="qc-bulletin"><div><small>СЛУЖЕБНАЯ ДИРЕКТИВА</small><b id="bulletinTitle">Базовый карантинный режим</b></div><button id="rulesBtn">Правила</button></div>
+<div class="qc-window">
+<div class="qc-glass"><div class="qc-person"><div class="qc-avatar" id="avatar"><span id="avatarFace">•‿•</span></div><div class="qc-person-copy"><small>ПРИБЫВШИЙ</small><h1 id="personName">—</h1><p id="personLine">Ожидание следующего пассажира…</p></div></div><div class="qc-queue"><span>Очередь</span><b id="queueCount">0</b></div></div>
+<div class="qc-interview"><span id="dialogue">Терминал готов к началу смены.</span></div>
+</div>
+<div class="qc-desk">
+<div class="qc-doc-tabs"><button class="active" data-doc="passport">Паспорт</button><button data-doc="health">Мед. пропуск</button><button data-doc="permit">Разрешение</button></div>
+<div class="qc-doc-stack">
+<article class="qc-document passport active" data-panel="passport"><div class="doc-head"><span>ПАСПОРТ</span><b id="passportCountry">—</b></div><div class="doc-photo" id="docPhoto">◎</div><dl><dt>Имя</dt><dd id="passportName">—</dd><dt>№ документа</dt><dd id="passportNo">—</dd><dt>Гражданство</dt><dd id="passportNation">—</dd><dt>Действителен до</dt><dd id="passportExpiry">—</dd></dl><div class="doc-stamp">IDENTITY VERIFIED</div></article>
+<article class="qc-document health" data-panel="health"><div class="doc-head"><span>МЕДИЦИНСКИЙ ПРОПУСК</span><b>Q-MED</b></div><div class="health-mark">✚</div><dl><dt>Имя</dt><dd id="healthName">—</dd><dt>Тест</dt><dd id="testResult">—</dd><dt>Давность теста</dt><dd id="testAge">—</dd><dt>Температура</dt><dd id="temperature">—</dd></dl><div class="doc-stamp medical">BIOCLEARANCE</div></article>
+<article class="qc-document permit" data-panel="permit"><div class="doc-head"><span>РАЗРЕШЕНИЕ НА ВЪЕЗД</span><b id="permitType">—</b></div><div class="permit-seal">07</div><dl><dt>Имя</dt><dd id="permitName">—</dd><dt>Цель</dt><dd id="purpose">—</dd><dt>Срок пребывания</dt><dd id="stay">—</dd><dt>Маршрут</dt><dd id="route">—</dd></dl><div class="doc-stamp permit-stamp">ENTRY AUTHORITY</div></article>
+</div>
+<div class="qc-tools"><button id="inspectBtn" class="inspect">⌁ Доп. проверка <span id="inspectCost">−6 сек</span></button><button id="denyBtn" class="deny">ОТКАЗАТЬ</button><button id="approveBtn" class="approve">ДОПУСТИТЬ</button></div>
+</div>
+</section>
+<aside class="qc-side">
+<section class="qc-status"><div><small>Репутация</small><b id="reputation">100</b></div><div><small>Оплата</small><b id="credits">0 ¤</b></div><div><small>Ошибки</small><b id="strikes">0 / 3</b></div><div><small>Биориск</small><b id="bioRisk">НИЗКИЙ</b></div></section>
+<section class="qc-rules"><div class="side-title"><small>АКТИВНЫЕ ПРАВИЛА</small><span id="ruleCount">0</span></div><div id="rulesList"></div></section>
+<section class="qc-log"><div class="side-title"><small>ЖУРНАЛ ТЕРМИНАЛА</small><span>LIVE</span></div><div id="log"></div></section>
+</aside>
+</main>
+</div>
+<div class="qc-overlay" id="startOverlay"><div class="qc-modal"><div class="qc-kicker">КАРАНТИННЫЙ ПОСТ // СЕКТОР 07</div><h2>ДОПУСК<br>ИЛИ ОТКАЗ</h2><p>Проверяй документы прибывающих, сверяй их с ежедневной директивой и не пропускай потенциально опасных людей. Ошибка может стоить денег, репутации — или новой вспышки.</p><div class="qc-rules-preview"><div><b>01</b><span>Сверяй имена и сроки документов.</span></div><div><b>02</b><span>Следи за тестами, температурой и маршрутами.</span></div><div><b>03</b><span>Доппроверка раскрывает скрытые нарушения, но отнимает время.</span></div></div><button class="qc-primary" id="startBtn">Принять смену</button></div></div>
+<div class="qc-overlay hidden" id="rulesOverlay"><div class="qc-modal rules-modal"><div class="qc-kicker">СЛУЖЕБНЫЙ СПРАВОЧНИК</div><h3>Правила текущей смены</h3><div id="rulesFull"></div><button class="qc-primary" id="closeRules">Вернуться к посту</button></div></div>
+<div class="qc-overlay hidden" id="shiftOverlay"><div class="qc-modal newspaper"><div class="paper-top">ТЕРМИНАЛ // СВОДКА</div><h2 id="shiftTitle">СМЕНА ЗАВЕРШЕНА</h2><p id="shiftText"></p><div class="paper-grid"><div><small>Обработано</small><b id="sumProcessed">0</b></div><div><small>Верных решений</small><b id="sumCorrect">0</b></div><div><small>Заражённых пропущено</small><b id="sumLeaks">0</b></div><div><small>Заработано</small><b id="sumCredits">0 ¤</b></div></div><div class="headline" id="headline">Терминал удержал ситуацию под контролем.</div><button class="qc-primary" id="nextDayBtn">Следующая смена</button></div></div>
+<script src="/quarantine.js?v=1"></script></body></html>
