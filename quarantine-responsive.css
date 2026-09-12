@@ -9,6 +9,8 @@
 @media(max-width:640px){
  html,body{max-width:100%;overflow-x:hidden}.qc-app,.qc-layout,.qc-booth,.qc-desk,.qc-doc-stack,.qc-document,.qc-tools,.qc-side,.qc-status{min-width:0;max-width:100%}
  .qc-booth,.qc-side{width:100%}.qc-desk{padding-left:8px!important;padding-right:8px!important}.qc-doc-tabs{width:100%;overflow:hidden}.qc-doc-tabs button{min-width:0;white-space:nowrap}.qc-doc-stack{width:100%;display:block;overflow:visible;padding:0 0 2px}.qc-document,.qc-document.health,.qc-document.permit{width:100%!important;max-width:100%!important;margin:0!important;transform:none!important}.qc-document.active{display:block}.qc-doc-stack.impact .qc-document.active{transform:none!important}
+ /* On phones the glass lamp read as a stray horizontal seam between bulletin and window. */
+ .qc-window-light{display:none!important}
  /* Dialogue should grow instead of clipping longer interrogation replies. */
  .qc-window{height:auto!important;min-height:188px}.qc-glass{height:150px!important}.qc-interview{height:auto!important;min-height:48px!important;padding:9px 12px 9px 32px!important;display:flex!important;align-items:center!important;white-space:normal!important;overflow:hidden!important;text-overflow:clip!important;line-height:1.35!important}.qc-interview span{display:block!important;min-width:0;white-space:normal!important;overflow-wrap:anywhere;word-break:normal}
  /* Utility actions are deliberately identical in footprint. */
