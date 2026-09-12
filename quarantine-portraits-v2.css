@@ -2,11 +2,10 @@
 #avatarFace.qc-portrait-host{width:94px!important;height:120px!important;display:block!important;position:relative;overflow:visible!important;background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:inherit!important;transform:none!important;filter:none!important}
 .qc-avatar #avatarFace.qc-portrait-host{filter:none!important;animation:none!important}
 .qc-portrait-v2{display:block;width:100%;height:100%;overflow:visible;transform:none!important;filter:none!important}
-/* Keep animation inside the eye geometry. Avoid opacity/filter changes on the portrait layer: Android Chrome can flash the whole compositor tile. */
-.qc-portrait-v2 .qc-eye-open{transform-box:fill-box;transform-origin:center;transform:scaleY(1);transition:transform .055s ease}
-.qc-portrait-host.is-blinking .qc-eye-open{transform:scaleY(.07)}
-.qc-portrait-v2 .qc-lid{opacity:.16;transition:none}
-.qc-portrait-host.is-blinking .qc-lid{opacity:1}
+/* Blink only the tiny eye group. No portrait opacity/filter animation: this avoids Android compositor-tile flashing. */
+.qc-portrait-v2 .qc-eyes{transform-box:fill-box;transform-origin:center;transform:scaleY(1);transition:transform .055s ease}
+.qc-portrait-host.is-blinking .qc-eyes{transform:scaleY(.07)}
+.qc-portrait-v2 .qc-lid{opacity:.38;transition:none}
 .qc-portrait-host.look-left .qc-pupil-group{transform:translateX(-1.8px)}
 .qc-portrait-host.look-right .qc-pupil-group{transform:translateX(1.8px)}
 .qc-portrait-host.look-center .qc-pupil-group{transform:translateX(0)}
@@ -17,8 +16,7 @@
 .qc-avatar.flagged{box-shadow:inset 0 -26px 32px #0006,0 16px 38px #0006,0 0 0 1px rgba(199,80,70,.35),0 0 24px rgba(199,80,70,.08)!important}
 .doc-photo.has-portrait{overflow:hidden!important;padding:0!important;background:#b8ad94!important}
 .doc-photo .qc-portrait-v2{width:100%;height:100%;transform:scale(1.08)!important;transform-origin:50% 48%;filter:grayscale(1) sepia(.3) contrast(.92) brightness(.94)!important}
-.doc-photo .qc-portrait-v2 .qc-eye-open{transform:none!important;transition:none!important}
-.doc-photo .qc-portrait-v2 .qc-lid{opacity:.16!important}
+.doc-photo .qc-portrait-v2 .qc-eyes{transform:none!important;transition:none!important}
 .doc-photo.has-portrait:before{content:"BIO-ID";position:absolute;left:4px;top:4px;z-index:4;font-size:5px;letter-spacing:.14em;color:rgba(58,51,40,.52)}
 @media(max-width:640px){#avatarFace.qc-portrait-host{width:64px!important;height:80px!important}.qc-avatar #avatarFace.qc-portrait-host{filter:none!important}.qc-portrait-host.look-left .qc-pupil-group{transform:translateX(-1.35px)}.qc-portrait-host.look-right .qc-pupil-group{transform:translateX(1.35px)}.qc-avatar:before{filter:blur(4px)}}
-@media(prefers-reduced-motion:reduce){.qc-portrait-v2 .qc-eye-open,.qc-pupil-group{transition:none!important}}
+@media(prefers-reduced-motion:reduce){.qc-portrait-v2 .qc-eyes,.qc-pupil-group{transition:none!important}}
