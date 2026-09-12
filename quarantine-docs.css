@@ -1,0 +1,29 @@
+/* Dense document interiors: extra identity, medical and permit data without changing gameplay rules. */
+.qc-document{overflow:hidden;isolation:isolate}
+.qc-document:before{content:"07";position:absolute;right:38px;top:86px;font:900 108px/1 Georgia,serif;letter-spacing:-.08em;color:rgba(77,68,50,.045);transform:rotate(-8deg);pointer-events:none;z-index:0}
+.qc-document.health:before{content:"✚";font-size:126px;color:rgba(61,94,69,.055);right:48px;top:82px}
+.qc-document.permit:before{content:"ENTRY";font:900 58px/1 ui-sans-serif,system-ui;letter-spacing:.08em;color:rgba(89,69,52,.045);right:24px;top:115px;transform:rotate(-9deg)}
+.qc-document>*{position:relative;z-index:1}
+.qc-doc-fill{clear:both;margin-top:16px;padding-top:12px;border-top:1px solid rgba(73,66,51,.33)}
+.qc-doc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.qc-doc-cell{min-width:0;border-bottom:1px dotted rgba(71,64,50,.26);padding:0 0 6px}
+.qc-doc-cell small{display:block;margin-bottom:3px;font-size:6px;line-height:1;text-transform:uppercase;letter-spacing:.1em;color:#716a59}
+.qc-doc-cell b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:9px;line-height:1.15;color:#312e26}
+.qc-document.health .qc-doc-cell small{color:#647263}.qc-document.permit .qc-doc-cell small{color:#746557}
+.qc-doc-security{display:grid;grid-template-columns:54px minmax(0,1fr) 92px;gap:10px;align-items:end;margin-top:13px}
+.qc-security-seal{width:50px;height:50px;border:1px solid rgba(82,73,55,.45);border-radius:50%;display:grid;place-items:center;text-align:center;font:800 6px/1.12 ui-sans-serif,system-ui;letter-spacing:.09em;color:rgba(74,66,51,.62);transform:rotate(-7deg);box-shadow:inset 0 0 0 3px rgba(82,73,55,.07)}
+.qc-security-seal:before{content:"07";display:block;font-size:14px;letter-spacing:0}
+.qc-signature{min-width:0;border-bottom:1px solid rgba(67,61,48,.52);height:34px;display:flex;align-items:flex-end;padding:0 4px 4px;font:italic 15px/1 "Segoe Script","Bradley Hand",cursive;color:rgba(54,49,40,.66);transform:rotate(-2deg)}
+.qc-signature-label{display:block;margin-top:3px;font-size:5px;letter-spacing:.1em;color:#766f5f;text-transform:uppercase}
+.qc-barcode{height:34px;border:1px solid rgba(70,63,49,.3);background:repeating-linear-gradient(90deg,rgba(45,42,34,.76) 0 1px,transparent 1px 3px,rgba(45,42,34,.76) 3px 5px,transparent 5px 7px,rgba(45,42,34,.76) 7px 8px,transparent 8px 11px);position:relative}
+.qc-barcode:after{content:attr(data-code);position:absolute;left:2px;right:2px;bottom:-9px;text-align:center;font:600 5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.1em;color:#6f6858;background:transparent}
+.qc-mrz{margin-top:15px;padding:8px 9px 7px;border-top:1px solid rgba(65,59,47,.42);border-bottom:1px solid rgba(65,59,47,.25);background:rgba(255,252,232,.13);font:700 7px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.12em;color:#49453a;white-space:nowrap;overflow:hidden}
+.qc-med-band{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:13px}
+.qc-med-check{border:1px solid rgba(75,101,79,.32);padding:7px 6px;background:rgba(81,111,86,.06);font-size:6px;letter-spacing:.08em;text-align:center;color:#5e725f}
+.qc-med-check b{display:block;margin-top:3px;font-size:8px;color:#405543}
+.qc-permit-note{margin-top:12px;padding:8px 10px;border:1px solid rgba(101,81,62,.26);background:rgba(118,95,70,.055);font-size:7px;line-height:1.35;color:#665848}
+.qc-permit-note b{display:block;margin-bottom:3px;font-size:6px;letter-spacing:.12em;text-transform:uppercase;color:#7a6855}
+.qc-doc-missing .qc-doc-fill{opacity:.48}.qc-doc-missing .qc-permit-note{border-color:rgba(121,62,54,.35);color:#774f47;background:rgba(139,64,55,.05)}
+@media(max-width:640px){
+ .qc-document{min-height:430px!important}.qc-doc-fill{margin-top:13px;padding-top:10px}.qc-doc-grid{grid-template-columns:1fr 1fr;gap:7px 10px}.qc-doc-cell{padding-bottom:5px}.qc-doc-cell small{font-size:5.6px}.qc-doc-cell b{font-size:8.4px}.qc-doc-security{grid-template-columns:46px minmax(0,1fr) 76px;gap:8px;margin-top:11px}.qc-security-seal{width:43px;height:43px;font-size:5px}.qc-security-seal:before{font-size:12px}.qc-signature{height:30px;font-size:12px}.qc-barcode{height:29px}.qc-mrz{margin-top:13px;padding:7px 6px 6px;font-size:5.7px;letter-spacing:.075em}.qc-med-band{margin-top:11px}.qc-med-check{padding:6px 3px;font-size:5px}.qc-med-check b{font-size:7px}.qc-permit-note{font-size:6.5px;padding:7px 8px}.qc-document:before{right:17px;top:102px;font-size:82px}.qc-document.health:before{font-size:96px;right:30px}.qc-document.permit:before{font-size:42px;right:11px;top:130px}}
+@media(max-width:380px){.qc-document{min-height:420px!important}.qc-doc-security{grid-template-columns:42px minmax(0,1fr) 68px}.qc-security-seal{width:39px;height:39px}.qc-mrz{font-size:5.2px;letter-spacing:.055em}}
