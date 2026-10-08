@@ -97,7 +97,7 @@ function apply(c){
  var colors=Object.assign({},fallbackColors,c.colors||{}),root=document.documentElement.style;
  root.setProperty("--bg",colors.background);root.setProperty("--surface",colors.surface);root.setProperty("--text",colors.text);root.setProperty("--muted",colors.muted);root.setProperty("--accent",colors.accent);root.setProperty("--accentText",colors.accentText);root.setProperty("--line",colors.line);
  var brand=document.getElementById("brand");brand.textContent=c.brand||"Начало";brand.insertAdjacentHTML("beforeend","<i>↗</i>");
- var nav=document.getElementById("nav");var links=c.navLinks||[{label:c.navLabel||"О проекте",url:"#cards-main"}];nav.innerHTML=links.map(function(x){return '<a href="'+esc(safeUrl(x.url))+'">'+esc(x.label)+'</a>'}).join("")+'<a href="/ember.html" style="color:var(--text);font-weight:800">✦ Пепельное сердце</a><a class="admin-link" href="/admin.html">Редактировать</a>';
+ var nav=document.getElementById("nav");var links=c.navLinks||[{label:c.navLabel||"О проекте",url:"#cards-main"}];nav.innerHTML=links.map(function(x){return '<a href="'+esc(safeUrl(x.url))+'">'+esc(x.label)+'</a>'}).join("")+'<a href="/ember.html" style="color:var(--text);font-weight:800">✦ Пепельное сердце</a><a href="/rift.html" style="color:var(--text);font-weight:800">✦ Пепельный разлом</a><a class="admin-link" href="/admin.html">Редактировать</a>';
  var modules=Array.isArray(c.modules)&&c.modules.length?c.modules:legacyModules(c);main.innerHTML=modules.map(renderModule).join("");
  document.getElementById("footerText").textContent=c.footerText||"";
  document.title=(c.brand||"Начало")+" — лендинг";
