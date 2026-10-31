@@ -1,0 +1,76 @@
+/* Terminal 07: readable, touch-first inspection workspace. */
+body{background:#101917!important;color:#ecebdc}
+body .qc-top,body .qc-status,body .qc-rules,body .qc-log{background:#17231f!important;border-color:#46554b!important;border-radius:12px}
+body .qc-bulletin{background:#22332b!important}
+body .qc-desk{background:linear-gradient(145deg,#3d4337,#252f28)!important}
+body .qc-document{background:#eee5c9!important;color:#242a24!important;border:1px solid #a59d83!important;box-shadow:0 8px 24px #0004!important}
+body .qc-document.health{background:#e0e8d5!important}
+body .qc-document.permit{background:#eadbc8!important}
+body .qc-document dt{color:#515747!important}
+body .qc-document dd{color:#20281f!important;font-weight:700}
+body .qc-doc-cell small{color:#59604e!important}
+body .qc-doc-cell b{color:#252d22!important}
+body .qc-case-note,body .qc-compare-status{color:#c1c9b9}
+body .qc-case-card{background:#192922;border-color:#82927b;border-radius:16px}
+body .qc-case-card p{color:#d3d9c8}
+body .qc-case-kicker{color:#f2ce82}
+body .qc-case-quote{background:#0e1a15;color:#f3e7c9!important}
+body .qc-overlay,body .qc-case-overlay{max-height:100dvh;overflow-y:auto}
+body .qc-modal,body .qc-case-card{max-height:calc(100dvh - 32px);overflow-y:auto}
+body .qc-tools button:disabled{opacity:.45}
+@media(max-width:760px){
+ body .qc-app{padding:8px!important}
+ body .qc-top{padding:10px!important;gap:8px!important;flex-wrap:wrap}
+ body .qc-brand b{font-size:12px!important;letter-spacing:.08em}
+ body .qc-brand span{display:none}
+ body .qc-top-actions{gap:6px!important;flex:1;justify-content:flex-end}
+ body .qc-top-actions button,body .qc-back{font-size:11px!important;padding:8px!important;min-height:44px}
+ body .qc-clock b{font-size:20px!important}
+ body .qc-bulletin{padding:12px!important}
+ body .qc-bulletin small{font-size:9px!important;color:#bdc9b7}
+ body .qc-bulletin b{font-size:15px!important}
+ body .qc-ethics-strip small{font-size:8px!important;color:#b4bdac}
+ body .qc-ethics-strip b{font-size:12px!important}
+ body .qc-glass{height:128px!important}
+ body .qc-person h1{font-size:22px!important}
+ body .qc-person-copy small{font-size:9px!important}
+ body .qc-person-copy p{font-size:11px!important}
+ body .qc-interview{font-size:13px!important;min-height:44px!important}
+ body .qc-desk{padding:10px!important;overflow:visible!important}
+ body .qc-doc-tabs{gap:5px!important;margin-bottom:8px}
+ body .qc-doc-tabs button{flex:1;padding:10px 6px!important;font-size:11px!important;min-height:44px;border-radius:8px 8px 0 0}
+ body .qc-compare-strip{padding:8px;flex-wrap:wrap}
+ body .qc-compare-toggle{min-height:40px;font-size:10px}
+ body .qc-compare-status{font-size:10px;white-space:normal}
+ body .qc-document,body .qc-document.health,body .qc-document.permit{min-height:0!important;padding:14px!important;height:auto!important}
+ body .doc-head{font-size:12px!important;margin-bottom:12px!important}
+ body .doc-photo{width:64px!important;height:82px!important;margin-right:12px!important}
+ body .qc-document dl{font-size:12px!important;grid-template-columns:minmax(80px,.85fr) minmax(0,1.2fr)!important;gap:6px!important}
+ body .qc-document dt{font-size:9px!important;line-height:1.4}
+ body .qc-document dd{font-size:12px!important;overflow-wrap:anywhere;line-height:1.4}
+ body .qc-doc-fill{margin-top:12px;padding-top:10px}
+ body .qc-doc-grid{gap:8px 12px}
+ body .qc-doc-cell small{font-size:8px!important;line-height:1.3}
+ body .qc-doc-cell b{font-size:11px!important;white-space:normal!important;line-height:1.3}
+ body .qc-doc-security{margin-top:10px}
+ body .qc-mrz{font-size:7px!important;margin-top:10px}
+ body .qc-med-check,body .qc-permit-note{font-size:9px!important}
+ body .qc-med-check b{font-size:10px!important}
+ body .qc-tools{position:sticky!important;bottom:8px;z-index:20;display:grid!important;grid-template-columns:1fr 1fr!important;gap:6px!important;padding:8px!important;margin-top:12px;background:#14231ff5;border:1px solid #71816b;border-radius:12px;box-shadow:0 6px 24px #0007;backdrop-filter:blur(12px)}
+ body .qc-tools .inspect,body .qc-tools .question{height:44px!important;min-height:44px!important;font-size:11px!important;border-radius:6px!important;padding:5px!important}
+ body .qc-tools .inspect span,body .qc-tools .question span{font-size:9px!important}
+ body .qc-stamp-control{height:48px!important;min-height:48px!important;border-radius:6px!important;padding:0!important;position:relative!important;transform:none!important}
+ body .qc-stamp-control .stamp-grip,body .qc-stamp-control .stamp-shaft{display:none!important}
+ body .qc-stamp-control .stamp-label{position:static!important;display:grid!important;place-items:center;width:100%!important;max-width:none!important;height:48px!important;transform:none!important;font-size:12px!important;letter-spacing:.1em}
+ body #denyBtn{background:#6e302e!important;border:1px solid #d58574!important}
+ body #approveBtn{background:#245b41!important;border:1px solid #8dc5a0!important}
+ body .qc-keyhelp{display:none!important}
+ body .qc-status{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ body .qc-status div{padding:12px 8px!important}
+ body .qc-status small{font-size:8px!important;color:#c4caba}
+ body .qc-status b{font-size:20px!important}
+ body .qc-case-card h3{font-size:27px;line-height:1.12}
+ body .qc-case-card p{font-size:15px}
+ body .qc-case-note{font-size:11px;line-height:1.5;letter-spacing:0}
+ body .qc-case-actions button{font-size:12px;min-height:48px}
+}
