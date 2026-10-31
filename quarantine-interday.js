@@ -6,7 +6,7 @@ const supports={lab:{k:'ЛАБОРАТОРНЫЙ КАНАЛ',title:'Подклю
 let W=load(),coreNext=null,bypass=false,settledDay=null,chosen=null,observer=null;
 function load(){try{return Object.assign({outbreak:14,trust:68,tension:20,campaigns:0,support:null,lastEnding:null},JSON.parse(localStorage.getItem(SAVE)||'{}'))}catch(e){return{outbreak:14,trust:68,tension:20,campaigns:0,support:null,lastEnding:null}}}
 function save(){W.outbreak=clamp(W.outbreak);W.trust=clamp(W.trust);W.tension=clamp(W.tension);localStorage.setItem(SAVE,JSON.stringify(W))}
-function day(){return parseInt(($('#dayLabel')?.textContent||'1').match(/\d+/)||['1'])[0],10)||1}
+function day(){return parseInt(((($('#dayLabel')?.textContent||'1').match(/\d+/))||['1'])[0],10)||1}
 function metrics(){const processed=parseInt($('#sumProcessed')?.textContent)||0,correct=parseInt($('#sumCorrect')?.textContent)||0,leaks=parseInt($('#sumLeaks')?.textContent)||0,strikes=parseInt($('#strikes')?.textContent)||0,accuracy=processed?Math.round(correct/processed*100):0;return{processed,correct,leaks,strikes,accuracy}}
 function ethics(){try{return Object.assign({loyalty:100,shadow:0},JSON.parse(localStorage.getItem('qc_cases_v1')||'{}'))}catch(e){return{loyalty:100,shadow:0}}}
 function settle(d){if(settledDay===d)return metrics();const m=metrics();W.outbreak+=m.leaks*12+Math.max(0,(m.processed-m.correct)-1)*2-(m.leaks===0?3:0);W.trust+=(m.accuracy>=95?5:m.accuracy>=80?1:-6)-m.leaks*3;W.tension+=m.leaks*6+(m.processed-m.correct)*2-(m.accuracy>=95?2:0);settledDay=d;save();return m}

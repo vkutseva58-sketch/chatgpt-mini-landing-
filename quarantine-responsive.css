@@ -6,17 +6,95 @@
 .qc-shift-actions{display:flex;align-items:center;gap:12px;margin-top:14px}.qc-shift-actions .grade{flex:0 0 56px}.qc-shift-actions .qc-primary{flex:1;min-width:0}
 /* Portrait artwork */
 #avatarFace.qc-portrait-host{width:84px;height:102px!important;display:block!important;background:none!important;border-radius:0!important;box-shadow:none!important;overflow:visible;color:inherit}.qc-avatar #avatarFace.qc-portrait-host{position:relative;z-index:2}.qc-portrait{display:block;width:100%;height:100%;overflow:visible}.qc-avatar .qc-portrait{filter:drop-shadow(0 8px 12px rgba(0,0,0,.28))}.doc-photo{overflow:hidden!important;padding:0!important}.doc-photo .qc-portrait{width:100%;height:100%;filter:grayscale(1) sepia(.28) contrast(.92) brightness(.96);transform:scale(1.05);transform-origin:50% 52%}.doc-photo.has-portrait:before{content:"BIO-ID";position:absolute;left:4px;top:4px;z-index:3;font-size:5px;letter-spacing:.14em;color:rgba(65,58,47,.5)}
-@media(max-width:640px){
- html,body{max-width:100%;overflow-x:hidden}.qc-app,.qc-layout,.qc-booth,.qc-desk,.qc-doc-stack,.qc-document,.qc-tools,.qc-side,.qc-status{min-width:0;max-width:100%}
- .qc-booth,.qc-side{width:100%}.qc-desk{padding-left:8px!important;padding-right:8px!important}.qc-doc-tabs{width:100%;overflow:hidden}.qc-doc-tabs button{min-width:0;white-space:nowrap}.qc-doc-stack{width:100%;display:block;overflow:visible;padding:0 0 2px}.qc-document,.qc-document.health,.qc-document.permit{width:100%!important;max-width:100%!important;margin:0!important;transform:none!important}.qc-document.active{display:block}.qc-doc-stack.impact .qc-document.active{transform:none!important}
- /* On phones the glass lamp read as a stray horizontal seam between bulletin and window. */
- .qc-window-light{display:none!important}
- /* Dialogue should grow instead of clipping longer interrogation replies. */
- .qc-window{height:auto!important;min-height:188px}.qc-glass{height:150px!important}.qc-interview{height:auto!important;min-height:48px!important;padding:9px 12px 9px 32px!important;display:flex!important;align-items:center!important;white-space:normal!important;overflow:hidden!important;text-overflow:clip!important;line-height:1.35!important}.qc-interview span{display:block!important;min-width:0;white-space:normal!important;overflow-wrap:anywhere;word-break:normal}
- /* Utility actions are deliberately identical in footprint. */
- .qc-tools{width:100%;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:8px!important;align-items:stretch!important}.qc-tools .inspect,.qc-tools .question{width:100%!important;min-width:0!important;height:68px!important;min-height:68px!important;padding:8px 7px!important;margin:0!important;border-radius:12px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;line-height:1.12!important;font-size:10px!important;text-align:center!important}.qc-tools .inspect span,.qc-tools .question span{display:block!important;margin:0!important;line-height:1.1!important;font-size:7px!important}.qc-stamp-control{width:100%!important;min-width:0!important;justify-self:stretch}.stamp-grip{left:50%!important}.stamp-label{max-width:calc(100% - 10px);overflow:hidden;text-overflow:ellipsis}
- .qc-status{width:100%;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}.qc-status div{min-width:0;overflow:hidden}.qc-status b{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
- #shiftOverlay{padding:max(10px,env(safe-area-inset-top)) 10px max(10px,env(safe-area-inset-bottom))}.qc-modal.newspaper{width:100%!important;max-width:100%!important;margin:auto!important;padding:18px 16px 16px!important}.qc-modal.newspaper h2{font-size:clamp(38px,12vw,54px)!important;line-height:.9!important;margin:13px 0 16px!important}.qc-modal.newspaper>p{font-size:12px!important;line-height:1.48!important}.qc-modal.newspaper .paper-grid{grid-template-columns:1fr 1fr!important;gap:9px!important}.qc-modal.newspaper .headline{font-size:clamp(20px,6.5vw,28px)!important;line-height:1.12!important;margin:14px 0!important}.qc-shift-actions{gap:9px;margin-top:10px}.qc-shift-actions .grade{flex-basis:54px;width:54px;height:54px}.qc-shift-actions .qc-primary{min-height:54px;white-space:normal;line-height:1.15;padding:9px 12px;font-size:14px}
- #avatarFace.qc-portrait-host{width:58px;height:70px!important}.qc-avatar{display:grid;place-items:center}.doc-photo .qc-portrait{transform:scale(1.03)}
+/* This file owns workspace geometry and is loaded after the visual modules. */
+button:focus-visible,a:focus-visible{outline:3px solid #efc67a;outline-offset:3px}
+.qc-keyhelp{font:11px/1.6 monospace;color:#b7b29e;text-align:center}
+.qc-top-actions button{cursor:pointer;min-height:42px}
+.qc-rules{max-height:420px;overflow:auto}
+.qc-tools{grid-template-columns:minmax(100px,1fr) minmax(100px,1fr) 120px 120px}
+.qc-doc-tabs button{min-height:44px}
+.qc-summary-toggle,.qc-summary-close{display:none}
+.qc-compare-status{font-size:11px;white-space:normal;letter-spacing:0}
+.qc-compare-toggle{min-height:40px;font-size:10px}
+.qc-document dd{overflow-wrap:anywhere}
+@media(min-width:1200px){
+ .qc-doc-stack{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;min-height:300px}
+ .qc-doc-stack .qc-document{display:block;position:relative;inset:auto;transform:none;width:auto;margin:0;padding:16px 12px;pointer-events:auto}
+ .qc-doc-tabs{display:none}.qc-document dl{grid-template-columns:1fr;gap:4px;font-size:12px}.qc-document dt{margin-top:4px}
+ .qc-document .doc-photo,.qc-document .health-mark,.qc-document .permit-seal{float:none;margin:0 0 12px}
+ .qc-doc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.qc-doc-security{grid-template-columns:45px 1fr}.qc-doc-security>div:last-child{grid-column:1/-1}
+ .qc-doc-cell b{white-space:normal;overflow-wrap:anywhere}.qc-document .doc-stamp{display:none}
 }
-@media(max-width:380px){.qc-document{padding:13px!important}.qc-document dl{grid-template-columns:86px 1fr!important}.qc-doc-tabs button{padding-left:6px!important;padding-right:6px!important;font-size:7px!important}.qc-shift-actions .qc-primary{font-size:13px}.qc-tools .inspect,.qc-tools .question{height:64px!important;min-height:64px!important;font-size:9px!important}}
+@media(max-width:1199px){
+ html,body{height:100%;overflow:hidden}
+ .qc-app{height:100dvh;padding:6px;display:flex;flex-direction:column;gap:6px}
+ .qc-app:after{display:none}
+ .qc-top{flex:none;height:46px;min-height:46px;margin:0;padding:4px 10px;overflow:visible}
+ .qc-top:after,.qc-brand span,.qc-brand>i,.qc-shift,.qc-back[href],.qc-top-actions .qc-sound{display:none}
+ .qc-brand b{font-size:12px;letter-spacing:0}.qc-top-actions{gap:6px}.qc-top-actions button{font-size:11px;padding:5px 8px;min-height:36px}
+ .qc-clock{min-width:52px;padding:0}.qc-clock small{font-size:8px}.qc-clock b{font-size:18px}
+ .qc-summary-toggle,.qc-summary-close{display:block;background:#25271f;border:1px solid #55513f;border-radius:6px;color:#d5ccb6;padding:8px}
+ .qc-layout{flex:1;min-height:0;width:100%;display:block}
+ .qc-booth{height:100%;min-height:0;border-radius:10px;display:flex;flex-direction:column}
+ .qc-bulletin{flex:none;height:40px;padding:4px 10px}.qc-bulletin small{font-size:7px}.qc-bulletin b{font-size:11px}.qc-bulletin button{min-height:32px;font-size:11px}
+ .qc-bulletin:after,.qc-mission-bar,.qc-ethics-strip{display:none}
+ .qc-window{flex:none;height:145px!important;min-height:0;border-bottom:3px solid #342f24}
+ .qc-glass{height:96px!important;padding:8px 12px!important;gap:8px}
+ .qc-window-id,.qc-camera,.qc-window-light,.qc-crowd{display:none!important}
+ .qc-person{gap:12px;min-width:0}.qc-avatar{flex:none;width:62px!important;height:78px!important}
+ .qc-avatar:before{display:none}.qc-person-copy{min-width:0}.qc-person-copy small{display:none}
+ .qc-person-copy h1{font-size:20px;margin:0 0 4px}.qc-person-copy p{font-size:10px;max-width:none}
+ #avatarFace.qc-portrait-host{width:50px;height:64px!important}
+ .qc-case-strip{max-width:none;gap:3px;flex-wrap:wrap;margin-top:4px;min-height:0}.case-chip{font-size:7px;padding:2px 4px;letter-spacing:0}
+ .qc-queue{min-width:36px;padding:5px;flex:none}.qc-queue span{font-size:7px}.qc-queue b{font-size:18px}.qc-queue:after{display:none}
+ .qc-interview{height:46px;min-height:0;padding:5px 10px 5px 26px;display:block;font-size:11px;line-height:1.45;white-space:normal;overflow:auto}
+ .qc-interview span{white-space:normal}.qc-interview:before{left:10px;top:2px}
+ .qc-desk{flex:1;min-height:0;padding:6px 8px;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;gap:5px}
+ .qc-desk-lamp,.qc-paperclip,.qc-pencil,.qc-desk:after,.qc-doc-stack:after,.qc-keyhelp{display:none}
+ .qc-doc-tabs{margin:0;width:100%;display:flex;gap:4px}.qc-doc-tabs button{flex:1;min-width:0;padding:6px 2px;font-size:11px;min-height:36px}
+ .qc-compare-strip{margin:0;padding:4px 6px;gap:8px;border-radius:5px}.qc-compare-toggle{min-height:32px;padding:4px 6px;font-size:9px}
+ .qc-compare-status{font-size:10px;line-height:1.3}
+ .qc-doc-stack{min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;perspective:none;padding:2px}
+ .qc-doc-stack .qc-document{width:100%;max-width:100%;min-height:0!important;margin:0;padding:12px!important;transform:none!important;box-shadow:0 3px 12px #0005}
+ .doc-head{font-size:10px;margin-bottom:10px;letter-spacing:.04em}.doc-head b{font-size:10px}
+ .qc-document dl{grid-template-columns:92px minmax(0,1fr)!important;gap:7px 8px;font-size:12px;clear:both}
+ .qc-document dt{font-size:9px;letter-spacing:0;line-height:1.4}.qc-document dd{line-height:1.4;min-height:18px}
+ .qc-document .doc-photo,.qc-document .health-mark,.qc-document .permit-seal{float:none;width:58px;height:68px;margin:0 0 10px}
+ .qc-document .health-mark,.qc-document .permit-seal{display:none}
+ .qc-document .doc-stamp{display:none}
+ .qc-doc-fill{margin-top:12px;padding-top:10px}.qc-doc-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .qc-doc-cell small{font-size:8px;line-height:1.3}.qc-doc-cell b{font-size:11px;white-space:normal;overflow-wrap:anywhere;line-height:1.4}
+ .qc-doc-security{grid-template-columns:48px minmax(0,1fr) 78px;gap:8px}.qc-mrz{font-size:7px;letter-spacing:0}.qc-permit-note{font-size:10px}.qc-permit-note b{font-size:9px}
+ .qc-tools{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;padding-bottom:env(safe-area-inset-bottom)}
+ .qc-tools .inspect,.qc-tools .question{grid-column:auto;grid-row:1;height:36px;min-height:36px;padding:3px;font-size:11px;border-radius:5px;line-height:1.2}
+ .qc-tools .inspect span,.qc-tools .question span{display:inline;font-size:10px;margin-left:4px}
+ /* Use actual flat controls on compact screens; remove all old stamp geometry. */
+ .qc-tools .qc-stamp-control{grid-row:2;width:100%;height:44px!important;min-height:44px!important;padding:0!important;border-radius:5px!important;border:1px solid #63846a!important;background:#294a33!important}
+ .qc-tools .qc-stamp-control.deny{background:#642b27!important;border-color:#a1574d!important}
+ .qc-stamp-control:before,.qc-stamp-control .stamp-shaft,.qc-stamp-control .stamp-grip{display:none}
+ .qc-stamp-control .stamp-label{position:static;transform:none;display:block;font-size:12px;letter-spacing:.06em;max-width:none}
+ .qc-side{display:none}.qc-side.mobile-open{display:flex;position:fixed;inset:6px;z-index:120;overflow:auto;min-height:0;padding:12px;border:1px solid #8a7955;background:#15150f}
+ .qc-summary-close{position:sticky;top:0;z-index:2;min-height:44px;flex:none}
+ .qc-side.mobile-open .qc-rules,.qc-side.mobile-open .qc-log{display:block;max-height:none;flex:none}
+ .qc-side.mobile-open .qc-status{grid-template-columns:repeat(3,minmax(0,1fr));flex:none}.qc-status div{padding:9px}.qc-status small{font-size:9px}.qc-status b{font-size:16px}
+ .rule-line{font-size:12px}.log-line{font-size:11px}
+ .qc-overlay,.qc-case-overlay,.qc-night-overlay{padding:10px}.qc-modal{max-height:calc(100dvh - 20px);padding:20px 16px}
+ .qc-modal h2{font-size:44px}.qc-rules-preview{grid-template-columns:1fr}.qc-rules-preview span{font-size:11px}.paper-grid{grid-template-columns:1fr 1fr}
+ .qc-alert{top:58px}.qc-feedback{bottom:115px;max-height:160px;overflow:auto;pointer-events:none}
+}
+@media(max-width:380px){.qc-brand b{font-size:10px}.qc-top{padding:4px 6px}.qc-top-actions{gap:4px}.qc-top-actions button{font-size:10px;padding:4px 6px}.qc-person-copy h1{font-size:18px}}
+@media(max-height:650px) and (max-width:1199px){.qc-window{height:112px!important}.qc-glass{height:70px!important}.qc-avatar{height:58px!important;width:46px!important}.qc-person-copy h1{font-size:16px}#avatarFace.qc-portrait-host{height:48px!important;width:38px}.qc-interview{height:39px;font-size:10px}.qc-case-strip{display:none}.qc-top{height:40px;min-height:40px}.qc-doc-tabs button{min-height:30px}.qc-compare-toggle{min-height:26px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+@media(min-width:1200px){
+ html,body{height:100%;overflow:hidden}.qc-app{height:100dvh;display:flex;flex-direction:column;gap:10px}.qc-top{flex:none;margin-bottom:0}.qc-layout{flex:1;min-height:0;width:100%}
+ .qc-booth{min-height:0;height:100%}.qc-side{min-height:0;height:100%;overflow:auto}
+ .qc-bulletin,.qc-window,.qc-mission-bar,.qc-ethics-strip{flex-shrink:0}.qc-window{height:190px}.qc-glass{height:148px;padding:8px 24px}.qc-avatar{height:115px}
+ .qc-desk{min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;gap:8px}.qc-compare-strip{margin:0}.qc-doc-stack{min-height:0;overflow:auto;padding:3px}.qc-tools{margin:0}.qc-keyhelp{margin:0}
+}
+@media(max-width:1199px){
+ .qc-side.mobile-open .qc-mission-bar{display:flex;flex:none;order:0;margin-top:10px}.qc-side.mobile-open .qc-ethics-strip{display:grid;flex:none}.qc-side.mobile-open .qc-rank-card{display:block;flex:none}
+ .qc-side.mobile-open #soundToggle{display:block;min-height:44px;flex:none;margin-top:10px}.qc-side.mobile-open .qc-mission-copy b{font-size:12px}
+ .qc-case-card{max-height:calc(100dvh - 20px);overflow:auto}.qc-case-toast{bottom:110px}.qc-prog-toast{pointer-events:none}
+ #avatarFace.qc-portrait-host{width:50px!important}
+}
