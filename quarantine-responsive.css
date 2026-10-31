@@ -98,3 +98,24 @@ button:focus-visible,a:focus-visible{outline:3px solid #efc67a;outline-offset:3p
  .qc-case-card{max-height:calc(100dvh - 20px);overflow:auto}.qc-case-toast{bottom:110px}.qc-prog-toast{pointer-events:none}
  #avatarFace.qc-portrait-host{width:50px!important}
 }
+/* Gate controls: one self-contained mechanism at both desktop and touch sizes. */
+.qc-cinema .qc-tools button.qc-gate-control{--gate-color:#bce9c6;--gate-top:#477565;--gate-bottom:#204a40;--gate-rim:#7fa58b;position:relative;isolation:isolate;height:76px!important;min-height:76px!important;width:100%;padding:4px!important;border:1px solid #52635d!important;border-radius:7px!important;background:linear-gradient(135deg,#6c7770,#253b3c 45%,#0b2028)!important;box-shadow:inset 0 1px #e1e8c340,0 4px 0 #07171d,0 7px 14px #00101866;animation:none!important;overflow:hidden;transform:none}
+.qc-cinema .qc-tools button.qc-gate-control.deny{--gate-color:#ffe0c2;--gate-top:#9b5d4c;--gate-bottom:#603b36;--gate-rim:#cd9a7a}
+.qc-cinema .qc-gate-control:before,.qc-cinema .qc-gate-control:after{display:none}
+.qc-gate-control .gate-face{height:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:6px 9px;border:1px solid var(--gate-rim);border-radius:3px;background:linear-gradient(180deg,var(--gate-top),var(--gate-bottom));color:var(--gate-color);box-shadow:inset 0 1px #ffffff40,inset 0 -3px #001a2344,0 2px 3px #00101899;position:relative;transform:translateY(-1px);transition:transform .12s,box-shadow .12s,filter .15s;overflow:hidden}
+.qc-gate-control .gate-face:before{content:'';position:absolute;inset:3px;border:1px solid #e9e4bd1c;pointer-events:none}.qc-gate-control .gate-face:after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,#fff1 45%,transparent 65%);pointer-events:none}
+.qc-gate-control .gate-icon{flex:none;display:grid;place-items:center;width:34px;height:40px;border-right:1px solid #e8ecc533;padding-right:6px;filter:drop-shadow(0 0 5px #bfefba33)}.qc-gate-control .gate-icon svg{display:block;width:100%;height:100%}
+.qc-gate-control.deny .gate-icon svg path:first-child{fill:#241c1c55;stroke-width:1.5}.qc-gate-control.deny .gate-face{border-left:4px solid #e3b47a}
+.qc-gate-control .gate-copy{min-width:0;text-align:left;position:relative;z-index:1}.qc-cinema .qc-gate-control .stamp-label{display:block;position:static;transform:none;color:var(--gate-color);font-size:11px;letter-spacing:.07em;line-height:1.3;max-width:none;white-space:nowrap;text-shadow:0 1px 2px #0006}
+.qc-gate-control .gate-copy small{display:block;margin-top:4px;font:6px/1.2 ui-monospace,monospace;letter-spacing:.05em;white-space:nowrap;color:var(--gate-color);opacity:.7}
+.qc-gate-control .gate-led{position:absolute;right:6px;top:6px;width:4px;height:4px;border-radius:50%;background:var(--gate-color);box-shadow:0 0 7px var(--gate-color);opacity:.85}
+.qc-cinema .qc-gate-control.pressing .gate-face,.qc-cinema .qc-gate-control:active:not(:disabled) .gate-face{transform:translateY(2px);box-shadow:inset 0 2px 6px #00101866,0 0 0 #001018;filter:brightness(1.25)}
+.qc-cinema .qc-gate-control.pressing .gate-led{box-shadow:0 0 12px 3px var(--gate-color)}
+.qc-cinema .qc-gate-control:disabled .gate-led{box-shadow:none;opacity:.25}
+@media(min-width:1200px){.qc-cinema .qc-tools{grid-template-columns:minmax(100px,1fr) minmax(100px,1fr) 170px 170px}}
+@media(max-width:1199px){
+ .qc-cinema .qc-tools button.qc-gate-control{height:44px!important;min-height:44px!important;padding:3px!important;border-radius:5px!important;grid-row:2}
+ .qc-gate-control .gate-face{gap:8px;padding:2px 10px 2px 5px}.qc-gate-control .gate-icon{width:29px;height:28px;padding-right:5px}
+ .qc-cinema .qc-gate-control .stamp-label{font-size:11px;letter-spacing:.045em}.qc-gate-control .gate-copy small{font-size:6px;margin-top:2px}.qc-gate-control .gate-led{right:4px;top:4px;width:3px;height:3px}
+}
+@media(max-width:380px){.qc-cinema .qc-gate-control .stamp-label{font-size:10px}.qc-gate-control .gate-face{gap:6px}.qc-gate-control .gate-copy small{font-size:5.5px;letter-spacing:0}}
