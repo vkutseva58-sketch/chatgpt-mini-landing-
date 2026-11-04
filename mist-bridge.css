@@ -2,3 +2,9 @@
 canvas{touch-action:none}#bays{display:block;left:4%;right:4%;text-align:center;font-size:10px;color:#e3e9d6;background:#16383ec9;padding:9px;border:1px solid #c3c99b44;border-radius:6px;pointer-events:none}.telemetry{bottom:46px}.precise{font-size:10px;position:relative}.precise summary{cursor:pointer;padding:8px;color:#d6c396}.precise[open]{position:absolute;bottom:145px;left:4%;padding:12px;background:#17383f;z-index:5;border:1px solid #b6c7a766;border-radius:8px}.precise select{color:#e1e9d2;background:#23474a;border:1px solid #bacbab66;border-radius:4px;padding:8px;font:inherit;max-width:130px}.precise label{margin-right:8px}.materials button[data-material=erase]{padding:8px}.materials button[data-material=erase] small{display:none}@media(max-width:700px){.materials{flex-wrap:wrap}.materials button{padding:6px;gap:5px}.materials button[data-material=erase]{flex:0 0 44px}.materials button[data-material=erase] span{display:none}.precise{width:100%;text-align:center}.precise summary{padding:3px}.precise[open]{width:92%;bottom:170px}.telemetry{font-size:9px}.telemetry b{font-size:8px}.story p{max-width:280px}#bays{font-size:9px;padding:7px}}@media(max-height:500px) and (orientation:landscape){.precise{display:none}.story{max-width:45%}}
 
 @media(max-height:500px) and (orientation:landscape){footer{flex-wrap:nowrap;gap:8px}.materials{gap:5px}.materials button{padding:5px 7px;gap:5px}.materials button[data-material=erase] span{display:none}.materials span{font-size:10px}.materials small{font-size:7px}.actions{gap:5px}#run{padding:8px 12px;font-size:12px}#hint{font-size:12px}#bays{display:none}.telemetry{bottom:8px}}
+
+@media(max-width:700px) and (min-height:501px){.telemetry{flex-direction:column;gap:4px}.telemetry b{align-self:flex-end}}
+
+@media(max-width:700px){#run{font-size:14px}.materials small{font-size:6.5px}}
+
+@media(max-height:500px) and (orientation:landscape){.story h1{display:none}}
