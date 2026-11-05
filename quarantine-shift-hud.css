@@ -1,0 +1,10 @@
+/* Shift HUD: unobtrusive progress and urgency indicators. */
+.qc-shift-progress{position:relative;z-index:3;display:flex;align-items:center;gap:10px;padding:8px 14px;background:#151b19;border-bottom:1px solid #344039;color:#b9c7b9;font:700 10px/1.4 ui-monospace,monospace;letter-spacing:.08em}
+.qc-shift-progress span{white-space:nowrap}
+.qc-shift-track{height:7px;flex:1;min-width:35px;background:#28332e;border:1px solid #41544a;border-radius:20px;overflow:hidden}
+.qc-shift-fill{height:100%;width:0;background:linear-gradient(90deg,#6f9d74,#c4d4a1);border-radius:20px;transition:width .4s ease}
+.qc-shift-progress.urgent{background:#2c201c;border-color:#7a4a37;color:#f0bd9d}
+.qc-shift-progress.urgent .qc-shift-fill{background:linear-gradient(90deg,#c66a4c,#e7b16d)}
+.qc-shift-progress.complete .qc-shift-fill{background:#b7cf91}
+@media(max-width:760px){.qc-shift-progress{padding:5px 9px;font-size:9px;gap:7px}.qc-shift-progress span:first-child{display:none}}
+@media(prefers-reduced-motion:reduce){.qc-shift-fill{transition:none}}
