@@ -20,8 +20,53 @@ function model(ctx,project,x,y,angle=0,size=1,flash=false){
  return {face,prism,crystal,beam,point:v=>project(...world(v)),draw(){faces.sort((a,b)=>a.depth-b.depth);ctx.lineWidth=.65;ctx.lineJoin='round';for(const f of faces){ctx.beginPath();f.pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.fillStyle=f.color;ctx.fill();ctx.strokeStyle=f.emissive?f.color:'rgba(8,17,25,.25)';ctx.stroke();}}};
 }
 function rune(ctx,p,rx,ry,color,time){ctx.save();ctx.strokeStyle=color;ctx.lineWidth=1.2;ctx.beginPath();ctx.ellipse(p.x,p.y,rx,ry,0,0,TAU);ctx.stroke();for(let i=0;i<8;i++){const a=i/8*TAU+time*.12;const x=p.x+Math.cos(a)*rx,y=p.y+Math.sin(a)*ry;ctx.beginPath();ctx.moveTo(x-2,y-3);ctx.lineTo(x+2,y);ctx.lineTo(x-2,y+3);ctx.stroke();}ctx.restore();}
+// Hero-specific sculpt: broad fire monk, layered lacquer armor and a molten glaive.
+function fireChampion({c,project,scale,t,u,glow,oval,hpbar}){
+ const base=project(u.x,u.y),s=1.28,step=Math.sin(u.walk)*u.walkSpeed,z=Math.abs(step)*1.5;
+ oval(base.x,base.y,34*scale,17*scale,'#030c16b0');rune(c,base,36*scale,19*scale,'#ffc77980',t);
+ const m=model(c,project,u.x,u.y,u.face>0?1.05:Math.PI+1.05,s,u.flash>0),red='#a93d32',gold='#e7bb70',dark='#302b36',skin='#e4a170',steel='#536574';
+ // Wind-swept shoulder mantle and two long embroidered skirt panels.
+ for(const side of [-1,1]){const sway=Math.sin(t*4)*3;
+ m.face([[-8,side*12,59+z],[-13,side*24,54+z],[-29+sway,side*25,15+z],[-32+sway,side*8,9+z]],red);
+ m.beam([-13,side*24,54+z],[-29+sway,side*25,15+z],1.3,gold);
+ const stride=side*step*7;
+ m.beam([0,side*10,30+z],[stride,side*13,14],6,dark);
+ m.prism(stride+3,side*13,3,11,7,9,dark,6);m.prism(stride,side*13,11,7,7,12,steel,6,0,.85);
+ m.face([[stride+7,side*13-5,24],[stride+10,side*13,17],[stride+7,side*13+5,24]],gold);
+ m.face([[9,side*3,34+z],[8,side*17,34+z],[11+stride*.3,side*20,17+z],[15+stride*.3,side*7,13+z]],red);
+ m.beam([8,side*17,34+z],[11+stride*.3,side*20,17+z],1,gold);
+ }
+ m.prism(0,0,28+z,13,16,10,dark,8,0,.85);m.prism(0,0,38+z,14,18,20,red,8,0,1.2);
+ m.prism(0,0,33+z,15,18,5,gold,8);m.crystal(16,0,33+z,5,10,'#ffbd5a',6);
+ // Curved overlapping breast plates, bright upper body and dark lower silhouette.
+ for(let i=0;i<3;i++)m.face([[14,-13,53-i*5+z],[19,0,56-i*5+z],[14,13,53-i*5+z],[16,0,47-i*5+z]],i===0?gold:steel);
+ for(const side of [-1,1]){
+ m.prism(-1,side*21,50+z,14,12,12,red,8,0,.72);m.prism(-1,side*21,61+z,11,9,3,gold,8);
+ for(let i=0;i<3;i++)m.face([[-9+i*5,side*22,61+z],[-14+i*5,side*33,73-i*3+z],[-2+i*5,side*28,58+z]],gold);
+ const reach=u.recoil>0?10:0;
+ m.beam([4,side*20,51+z],[12+reach,side*27,39+z],6,skin);
+ m.beam([12+reach,side*27,39+z],[19+reach,side*25,42+z],6,dark);
+ m.prism(15+reach,side*25,36+z,7,7,10,red,6);m.prism(15+reach,side*25,44+z,7,7,3,gold,6);
+ }
+ // Exposed face, pronounced brow, beard and swept-back flame hair.
+ m.prism(0,0,58+z,6,7,7,skin,8);m.prism(1,0,64+z,10,10,16,skin,8,0,.8);
+ m.face([[10,-7,73+z],[14,0,69+z],[10,7,73+z],[11,0,64+z]],skin);
+ m.beam([10,-7,76+z],[12,-2,75+z],1.8,dark);m.beam([12,2,75+z],[10,7,76+z],1.8,dark);
+ m.beam([12,-6,73+z],[13,-2,73+z],.8,'#fff1b1');m.beam([13,2,73+z],[12,6,73+z],.8,'#fff1b1');
+ m.face([[11,-8,68+z],[15,0,65+z],[11,8,68+z],[5,0,57+z]],'#752b29');
+ m.prism(-2,0,77+z,10,10,5,'#a73d29',8);
+ for(let i=0;i<5;i++){const y=(i-2)*4;m.face([[5,y-3,80+z],[-3,y+3,81+z],[-18-Math.sin(t*6+i)*2,y,92-Math.abs(i-2)*3+z],[-10,y-3,77+z]],i%2? '#ffb64e':'#ed7035');}
+ m.beam([6,-9,78+z],[10,0,80+z],1.5,gold);m.beam([10,0,80+z],[6,9,78+z],1.5,gold);
+ // Oversized crescent glaive with a glowing cutting edge.
+ const h=19+(u.recoil>0?10:0);
+ m.beam([h,-26,12+z],[h,-26,88+z],2.5,dark);for(const zz of [24,42,68,82])m.prism(h,-26,zz+z,4,4,3,gold,6);
+ m.face([[h,-26,66+z],[h+10,-26,82+z],[h+7,-26,103+z],[h+24,-26,91+z],[h+25,-26,76+z],[h+14,-26,62+z]],gold);
+ m.face([[h+7,-26,103+z],[h+24,-26,91+z],[h+25,-26,76+z],[h+31,-26,86+z],[h+25,-26,103+z],[h+8,-26,112+z]],'#ff9945',true);
+ m.draw();const q=m.point([h+22,-26,91+z]);glow(q.x,q.y,24*scale,'#ff8a344d');hpbar(u,151,58);
+}
+
 function character({c,project,scale,t,u,hero,glow,oval,hpbar}){
- if(u.hp<=0)return;const champion=u.type==='hero'||u.type==='bot',ranged=u.type==='ranged',p=palette[u.team?'void':'ember'],base=project(u.x,u.y),size=champion?1.2:.78;
+ if(u.hp<=0)return;if(u===hero){fireChampion({c,project,scale,t,u,glow,oval,hpbar});return;}const champion=u.type==='hero'||u.type==='bot',ranged=u.type==='ranged',p=palette[u.team?'void':'ember'],base=project(u.x,u.y),size=champion?1.2:.78;
  if(base.x < -180*scale||base.x > c.canvas.clientWidth+180*scale||base.y < -30*scale||base.y > c.canvas.clientHeight+180*scale)return;
  oval(base.x,base.y,(champion?26:18)*scale,(champion?13:9)*scale,'#030c16a6');
  if(u===hero)rune(c,base,30*scale,16*scale,'#ffc77980',t);
