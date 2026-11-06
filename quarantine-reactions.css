@@ -1,0 +1,13 @@
+/* Atmospheric response layer. Visual-only, no gameplay state mutations. */
+.qc-atmo-alert{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 60%,transparent 25%,rgba(176,53,41,.25) 100%);box-shadow:inset 0 0 0 2px rgba(225,81,63,.55)}
+.qc-atmo-alert.show{animation:qcAlertSignal .85s ease-out both}
+.qc-atmo-label{position:absolute;right:12px;top:12px;padding:5px 8px;background:rgba(55,16,13,.88);border:1px solid #c36c54;color:#ffd2b6;font:800 10px/1.2 ui-monospace,monospace;letter-spacing:.12em}
+.qc-atmo-pass{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;box-shadow:inset 0 0 0 2px rgba(122,192,143,.55);background:radial-gradient(ellipse at 50% 60%,transparent 40%,rgba(63,126,82,.16))}
+.qc-atmo-pass.show{animation:qcPassSignal .75s ease-out both}
+.qc-person.qc-atmo-arrive{animation:qcAtmoArrival .55s cubic-bezier(.18,.75,.24,1) both}
+.qc-person.qc-atmo-leave{animation:qcAtmoDeparture .3s ease-in both}
+@keyframes qcAlertSignal{0%{opacity:0}18%,45%{opacity:1}100%{opacity:0}}
+@keyframes qcPassSignal{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
+@keyframes qcAtmoArrival{from{opacity:0;filter:blur(3px);transform:translateX(20px)}to{opacity:1;filter:blur(0);transform:translateX(0)}}
+@keyframes qcAtmoDeparture{to{opacity:0;transform:translateX(-18px)}}
+@media(prefers-reduced-motion:reduce){.qc-atmo-alert.show,.qc-atmo-pass.show,.qc-person.qc-atmo-arrive,.qc-person.qc-atmo-leave{animation:none!important}.qc-atmo-alert.show,.qc-atmo-pass.show{opacity:.6}}
