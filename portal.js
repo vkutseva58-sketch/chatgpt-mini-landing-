@@ -27,17 +27,61 @@ function send(text){text=text.trim().slice(0,600);if(!text||pending)return;const
 $('#chat-form').addEventListener('submit',e=>{e.preventDefault();send($('#chat-input').value);});document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>send(b.dataset.prompt)));$('#clear-chat').addEventListener('click',()=>{clearTimeout(pending);pending=null;document.body.classList.remove('nova-thinking');welcome();save();$('#messages').replaceChildren();history.forEach(bubble);});
 const canvas=$('#portal-art'),ctx=canvas.getContext('2d');const reduce=matchMedia('(prefers-reduced-motion: reduce)');let animate=!reduce.matches;try{if(localStorage.getItem('portal-motion')==='off')animate=false;}catch{}let w=1,h=1,frame=0,pointer={x:0,y:0};
 function resize(){const rect=canvas.getBoundingClientRect();if(!rect.width)return;w=rect.width;h=rect.height;const dpr=Math.min(devicePixelRatio||1,1.75);canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);draw(performance.now());}
-function draw(time){if(!ctx)return;ctx.clearRect(0,0,w,h);const mobile=w<701,cx=mobile?w*.53:w*.77,cy=mobile?h*.76:h*.47,R=mobile?w*.28:Math.min(w*.205,h*.34),t=animate?time*.00022:0;
-ctx.save();ctx.translate(cx+pointer.x*12,cy+pointer.y*9);ctx.rotate(-.28+Math.sin(t*.3)*.035);
-const halo=ctx.createRadialGradient(0,0,R*.35,0,0,R*1.6);halo.addColorStop(0,'#99ee5500');halo.addColorStop(.5,'#a9f85b18');halo.addColorStop(.7,'#88c44c0c');halo.addColorStop(1,'#88c44c00');ctx.fillStyle=halo;ctx.fillRect(-R*2,-R*2,R*4,R*4);
-// Fine flowing filaments form the rim; inner ellipses recede into the opening.
-for(let j=0;j<10;j++){const phase=(j/10+t*.09)%1,r=R*(.12+phase*.64);ctx.beginPath();ctx.ellipse(0,0,r*.78,r,0,0,Math.PI*2);ctx.strokeStyle=`rgba(168,232,108,${Math.sin(phase*Math.PI)*.085})`;ctx.lineWidth=.6;ctx.stroke();}
-for(let ring=0;ring<(mobile?34:52);ring++){const n=mobile?34:52,offset=(ring/n-.5)*.42;ctx.beginPath();for(let step=0;step<=150;step++){const a=step/150*Math.PI*2,r=R*(1+offset+Math.sin(a*4+t*2+ring*.12)*.018+Math.sin(a*9-t)*.008);const x=Math.cos(a)*r*.79,y=Math.sin(a)*r;step?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.closePath();ctx.strokeStyle=`rgba(195,252,130,${.1+Math.sin(ring/n*Math.PI)*.3})`;ctx.lineWidth=.8;ctx.stroke();}
-// Traveling highlights give the ring depth without expensive full-canvas blur.
-for(let j=0;j<4;j++){const a=t*(j%2?-.3:.4)+j*1.7;ctx.beginPath();ctx.ellipse(0,0,R*.79,R,-.01,a,a+.48);ctx.strokeStyle=j%2?'#f1ffcd88':'#c0ff7466';ctx.lineWidth=j%2?1.5:2.5;ctx.shadowColor='#c5ff77';ctx.shadowBlur=14;ctx.stroke();}ctx.shadowBlur=0;
-for(let i=0;i<(mobile?80:140);i++){const a=i*2.39996+t*(i%2?.15:-.11),r=R*(.76+(Math.sin(i*7.13)+1)*.3);ctx.fillStyle=`rgba(224,255,180,${.15+(Math.sin(i+t*3)+1)*.25})`;ctx.beginPath();ctx.arc(Math.cos(a)*r*.79,Math.sin(a)*r,i%17===0?1.6:.65,0,7);ctx.fill();}
-ctx.strokeStyle='#c5f96525';ctx.lineWidth=.6;ctx.beginPath();ctx.ellipse(0,0,R*1.2,R*1.3,0,0,Math.PI*2);ctx.stroke();ctx.restore();
-for(let i=0;i<38;i++){const x=(Math.sin(i*18.2)*.5+.5)*w,y=((Math.cos(i*13.8)*.5+.5)*h-t*(i%3+1)*5)%h;ctx.fillStyle=`rgba(211,255,163,${.12+(Math.sin(t+i)+1)*.15})`;ctx.fillRect(x,(y+h)%h,i%9===0?2:1,1);}}
+// Deterministic dust field: generated once, never allocated inside animation frames.
+const dust=Array.from({length:1800},(_,i)=>{const hash=n=>{const v=Math.sin(n*127.1+311.7)*43758.5453;return v-Math.floor(v);};return {r:hash(i+1),a:hash(i+41),z:hash(i+93)-.5,size:hash(i+127),arm:i%3};});
+function draw(time){
+ if(!ctx)return;
+ ctx.clearRect(0,0,w,h);
+ const mobile=w<701,cx=mobile?w*.52:w*.76,cy=mobile?h*.735:h*.47;
+ const R=mobile?w*.36:Math.min(w*.21,h*.37),t=animate?time*.00013:0;
+ ctx.save();ctx.translate(cx+pointer.x*9,cy+pointer.y*7);ctx.rotate(-.48+Math.sin(t*.35)*.04);
+ // Broad nebula glow, with an asymmetric cyan rim to separate the layers.
+ const haze=ctx.createRadialGradient(0,0,0,0,0,R*1.45);
+ haze.addColorStop(0,'#ebffc632');haze.addColorStop(.22,'#c4ff6125');haze.addColorStop(.55,'#6aa94812');haze.addColorStop(1,'#193c3400');
+ ctx.fillStyle=haze;ctx.fillRect(-R*1.5,-R*1.5,R*3,R*3);
+ ctx.globalCompositeOperation='lighter';
+ // Three flowing spiral arms rather than a closed torus. Perspective flattens
+ // the distant side, while the raised crests make the plasma feel volumetric.
+ for(let arm=0;arm<3;arm++){
+  for(let band=0;band<(mobile?12:18);band++){
+   ctx.beginPath();
+   for(let k=0;k<=95;k++){
+    const q=k/95,r=R*(.11+q*.99),a=arm*Math.PI*2/3+q*4.7-t+band*.014;
+    const ripple=Math.sin(q*13-t*2+arm)*.018*R*q;
+    const x=Math.cos(a)*(r+ripple),y=Math.sin(a)*(r+ripple)*.63+Math.sin(a*2+t)*R*.045*q;
+    if(k===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+   }
+   ctx.lineWidth=band%4===0?1.3:.65;
+   const ribbon=ctx.createLinearGradient(-R,-R*.5,R,R*.5);
+   ribbon.addColorStop(0,'#66c5c204');ribbon.addColorStop(.35,'#a6fbbf28');ribbon.addColorStop(.55,'#e4ffb957');ribbon.addColorStop(.75,'#c3f96a25');ribbon.addColorStop(1,'#a9da6500');
+   ctx.strokeStyle=ribbon;ctx.stroke();
+  }
+ }
+ // Thousands of tiny stars follow curved trajectories with differential rotation.
+ const count=mobile?1050:dust.length;
+ for(let i=0;i<count;i++){
+  const d=dust[i],q=Math.pow(d.r,.7),r=R*(.1+q*1.06);
+  const a=d.arm*Math.PI*2/3+q*4.7-t+(d.a-.5)*(.13+q*.8);
+  const x=Math.cos(a)*r,y=Math.sin(a)*r*.63+d.z*R*.16*q;
+  const alpha=(.18+d.size*.65)*(1-q*.55),sz=(mobile?.45:.5)+d.size*(q<.3?.8:1.05);
+  ctx.fillStyle=i%5===0?`rgba(134,230,218,${alpha})`:`rgba(221,255,173,${alpha})`;
+  ctx.fillRect(x,y,sz,sz);
+ }
+ // White-hot lens, surrounded by a soft corona. No expensive per-star shadows.
+ const corona=ctx.createRadialGradient(0,0,R*.015,0,0,R*.31);
+ corona.addColorStop(0,'#ffffeaff');corona.addColorStop(.12,'#f4ffd9cc');corona.addColorStop(.3,'#dbff8e70');corona.addColorStop(.62,'#b6f76918');corona.addColorStop(1,'#b6f76900');
+ ctx.fillStyle=corona;ctx.fillRect(-R*.32,-R*.32,R*.64,R*.64);
+ ctx.save();ctx.scale(1,.25);
+ const flare=ctx.createRadialGradient(0,0,0,0,0,R*.7);flare.addColorStop(0,'#f7ffeaaa');flare.addColorStop(.13,'#eaffaf66');flare.addColorStop(.45,'#b0f5ba15');flare.addColorStop(1,'#a0f5ba00');ctx.fillStyle=flare;ctx.fillRect(-R*.7,-R*.7,R*1.4,R*1.4);ctx.restore();
+ // Satellite stars drift beyond the arms, with fine optical cross highlights.
+ for(let i=0;i<22;i++){
+  const d=dust[i*17],a=d.a*6.28+t*.08,r=R*(.8+d.r*.55),x=Math.cos(a)*r,y=Math.sin(a)*r*.8;
+  const shimmer=.35+(Math.sin(t*3+i)*.5+.5)*.45;
+  ctx.fillStyle=`rgba(222,255,210,${shimmer})`;ctx.beginPath();ctx.arc(x,y,i%6===0?1.3:.65,0,Math.PI*2);ctx.fill();
+  if(i%6===0){ctx.strokeStyle=`rgba(206,255,212,${shimmer*.4})`;ctx.lineWidth=.6;ctx.beginPath();ctx.moveTo(x-4,y);ctx.lineTo(x+4,y);ctx.moveTo(x,y-4);ctx.lineTo(x,y+4);ctx.stroke();}
+ }
+ ctx.restore();
+}
 let heroVisible=true,lastFrame=0;new IntersectionObserver(entries=>{heroVisible=entries[0].isIntersecting;},{threshold:0}).observe($('.hero'));
 function loop(t){if(!document.hidden&&heroVisible&&!$('#home').hidden&&animate&&t-lastFrame>32){draw(t);lastFrame=t;}frame=requestAnimationFrame(loop);}window.addEventListener('resize',resize);$('.hero').addEventListener('pointermove',e=>{if(!animate)return;pointer.x=e.clientX/w-.5;pointer.y=(e.clientY-$('.hero').getBoundingClientRect().top)/h-.5;});function setMotion(value){animate=value;document.body.classList.toggle('motion-off',!animate);$('#motion').setAttribute('aria-pressed',String(animate));$('#motion').setAttribute('aria-label',animate?'Выключить анимацию':'Включить анимацию');$('#motion').textContent=animate?'Ⅱ Анимация':'▷ Анимация';draw(performance.now());}$('#motion').addEventListener('click',()=>{setMotion(!animate);try{localStorage.setItem('portal-motion',animate?'on':'off');}catch{}});reduce.addEventListener('change',e=>setMotion(!e.matches));setMotion(animate);navigate();requestAnimationFrame(loop);
 const reveal=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');reveal.unobserve(e.target);}}),{threshold:.08});document.querySelectorAll('.dimension-lab,.discovery .section-head,.featured,.nova-banner').forEach(el=>{el.classList.add('reveal');reveal.observe(el);});

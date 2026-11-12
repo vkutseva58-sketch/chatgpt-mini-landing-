@@ -18,3 +18,5 @@ body.motion-off .reveal{opacity:1;transform:none}body.motion-off .feature-card,b
 @media(max-width:1100px){.dimension-lab{gap:25px}.dimension-controls button{padding:14px 12px;gap:8px}.dimension-controls i{width:20px;height:20px}.dimension-controls{gap:7px}}@media(max-width:800px){.dimension-lab{align-items:flex-start;flex-direction:column;gap:22px}.lab-copy>p:last-child{min-height:0}.dimension-controls{width:100%}.dimension-controls button{flex:1;justify-content:center}.dimension-controls small{font-size:6px}.dimension-controls span{font-size:10px}.nova-core{width:100px;height:100px}}@media(max-width:370px){.dimension-controls button{flex-direction:column;align-items:flex-start}.dimension-controls i{width:18px;height:18px}}
 body.motion-off .bridge img,body.motion-off .world-0 img{scale:1;translate:0}body.motion-off #world-transition{display:none}
 @media(prefers-reduced-motion:reduce){#world-transition{display:none}}
+/* Give the stellar sculpture breathing room above its caption on small screens. */
+@media(max-width:700px){.portal-caption{bottom:83px}.portal-caption small{margin-top:8px}}
