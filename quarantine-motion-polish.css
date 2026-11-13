@@ -1,0 +1,15 @@
+/* Optional visual polish; no gameplay logic changes. */
+@media (prefers-reduced-motion: no-preference) {
+.qc-window-light{animation:qcAmbientLight 7s ease-in-out infinite alternate}
+.qc-camera i{animation:qcRecordPulse 2.1s ease-in-out infinite}
+.qc-document.active{animation:qcPaperEnter .28s ease-out both}
+.qc-tools button:not(:disabled){transition:transform .15s ease,filter .15s ease}
+.qc-tools button:not(:disabled):active{transform:translateY(2px) scale(.985)}
+.qc-tools button:not(:disabled):hover{filter:brightness(1.08)}
+.qc-primary:not(:disabled){transition:transform .16s ease,filter .16s ease}
+.qc-primary:not(:disabled):hover{transform:translateY(-2px);filter:brightness(1.08)}
+@keyframes qcAmbientLight{from{opacity:.65}to{opacity:1}}
+@keyframes qcRecordPulse{0%,100%{opacity:1}50%{opacity:.38}}
+@keyframes qcPaperEnter{from{opacity:.75;translate:0 7px}to{opacity:1;translate:0 0}}
+}
+@media (prefers-reduced-motion: reduce){.qc-window-light,.qc-camera i,.qc-document.active{animation:none!important}}
